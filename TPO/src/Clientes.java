@@ -1,8 +1,12 @@
 
-public class Clientes {
+public class Cliente {
+	private String nombre;
+	private String domicilio;
+	private String email;
+	private Collection<Factura> facturas;
+	private Collection<Reclamo> reclamos;
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 				
 	}
 
