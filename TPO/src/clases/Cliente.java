@@ -1,3 +1,6 @@
+package clases;
+
+import java.util.Collection;
 
 public class Cliente {
 	private String nombre;

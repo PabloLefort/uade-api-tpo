@@ -1,3 +1,7 @@
+package clases;
+
+import java.sql.Date;
+
 public class Reclamo {
   private Date fecha;
   private int nroReclamo;
