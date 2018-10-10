@@ -9,6 +9,7 @@ public abstract class Reclamo {
   private String estado;
 
   public static void main(String[] args) {
+	  
+  }
 
-	}
 }
