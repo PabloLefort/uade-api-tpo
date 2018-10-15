@@ -16,6 +16,8 @@ public abstract class Reclamo {
 		this.estado = estado;
 	}
 
-	
+	public void cerrarReclamo() {
+		
+	};
 
 }

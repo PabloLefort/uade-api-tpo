@@ -15,4 +15,5 @@ public class ReclamoCantidades extends Reclamo {
 		this.prod = prod;
 		this.cantidad = cantidad;
 	}
+	
 }
