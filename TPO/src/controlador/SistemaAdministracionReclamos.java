@@ -7,6 +7,7 @@ import javax.swing.text.html.HTMLDocument.Iterator;
 import negocio.Cliente;
 import negocio.Factura;
 import negocio.ItemFactura;
+import negocio.Producto;
 import negocio.Reclamo;
 import negocio.Reporte;
 import negocio.Usuario;
@@ -18,6 +19,7 @@ public class SistemaAdministracionReclamos {
 	private Collection<Factura> facturas;
 	private Collection<Usuario> usuarios;
 	private Collection<Reporte> reportes;
+	private Collection<Producto> productos;
 	
 	public SistemaAdministracionReclamos(String nombreEmpresa) {
 		this.nombreEmpresa = nombreEmpresa;
@@ -50,5 +52,18 @@ public class SistemaAdministracionReclamos {
 		}
 		
 		return null;
+	}
+	
+	// ABM PRODUCTOS
+	public Producto AltaProducto(int codProducto, Float precio, String nombre, String descripcion) {
+		Producto prod = new Producto(codProducto, precio, nombre, descripcion);
+		this.productos.add(prod);
+		return prod;
+	}
+	
+	public void BajaProducto(int codProducto) {
+		for (int i = 0; i < this.productos.size(); i++) {
+			//if(this.productos[i])
+		}
 	}
 }

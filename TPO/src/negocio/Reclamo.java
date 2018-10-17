@@ -47,8 +47,7 @@ public abstract class Reclamo {
 		return this.cliente;
 	}
 	
-	public void attach(IObserver tablero)
-	{
+	public void attach(IObserver tablero){
 		observadores.add(tablero);
 	}
 	
@@ -57,5 +56,9 @@ public abstract class Reclamo {
 			if(obs.equals(tablero))
 				observadores.remove(tablero);
 		}
+	}
+	
+	public void procesar(TratamientoStrategy estrategia) {
+		estrategia.ProcesarReclamo();
 	}
 }

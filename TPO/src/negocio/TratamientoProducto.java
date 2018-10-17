@@ -1,4 +1,4 @@
-package clases;
+package negocio;
 
 public class TratamientoProducto implements TratamientoStrategy {
 

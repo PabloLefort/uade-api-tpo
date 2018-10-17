@@ -7,8 +7,12 @@ public class Producto {
 	public String nombre;
 	public String descripcion;
 	
-	public static void main(String[] args) {
-		
-	}	
+	public Producto(int codProducto, Float precio, String nombre, String descripcion) {
+		super();
+		this.codProducto = codProducto;
+		this.precio = precio;
+		this.nombre = nombre;
+		this.descripcion = descripcion;
+	}
 	
 }
