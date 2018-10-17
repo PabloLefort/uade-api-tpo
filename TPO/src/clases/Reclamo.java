@@ -17,7 +17,11 @@ public abstract class Reclamo {
 	}
 
 	public void cerrarReclamo() {
-		
+		this.estado = "pendiente";
 	};
+	
+	public void procesar(TratamientoStrategy strategia) {
+		strategia.ProcesarReclamo();
+	}
 
 }
