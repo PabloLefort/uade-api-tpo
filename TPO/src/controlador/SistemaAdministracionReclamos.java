@@ -1,6 +1,8 @@
 package controlador;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.swing.text.html.HTMLDocument.Iterator;
 
@@ -19,7 +21,7 @@ public class SistemaAdministracionReclamos {
 	private Collection<Factura> facturas;
 	private Collection<Usuario> usuarios;
 	private Collection<Reporte> reportes;
-	private Collection<Producto> productos;
+	private ArrayList<Producto> productos;
 	
 	public SistemaAdministracionReclamos(String nombreEmpresa) {
 		this.nombreEmpresa = nombreEmpresa;
@@ -55,15 +57,37 @@ public class SistemaAdministracionReclamos {
 	}
 	
 	// ABM PRODUCTOS
-	public Producto AltaProducto(int codProducto, Float precio, String nombre, String descripcion) {
+	public Producto AltaProducto(int codProducto, float precio, String nombre, String descripcion) {
 		Producto prod = new Producto(codProducto, precio, nombre, descripcion);
 		this.productos.add(prod);
 		return prod;
 	}
 	
-	public void BajaProducto(int codProducto) {
+	private Producto BuscarProducto(int codProducto) {
 		for (int i = 0; i < this.productos.size(); i++) {
-			//if(this.productos[i])
+			if(this.productos.get(i).codProducto == codProducto) {
+				return this.productos.get(i);
+			}
+		}
+		return null;
+	}
+	
+	public void BajaProducto(int codProducto) {
+		if(this.BuscarProducto(codProducto) != null) {
+			for (int i = 0; i < this.productos.size(); i++) {
+				if(this.productos.get(i).codProducto == codProducto) {
+					this.productos.remove(i);
+				}
+			}
+		}
+	}
+	
+	public void ModificacionProducto(int codProducto, float precio, String nombre, String descripcion) {
+		Producto prod = this.BuscarProducto(codProducto);
+		if(prod != null) {
+			prod.setDescripcion(descripcion);
+			prod.setNombre(nombre);
+			prod.setPrecio(precio);
 		}
 	}
 }
