@@ -6,9 +6,8 @@ public class ReclamoProducto extends Reclamo {
 	Producto prod;
 	int cantidad;
 
-	public ReclamoProducto(Date fecha, int nroReclamo, String descripcion, EstadosReclamo estado) {
-		super(fecha, nroReclamo, descripcion, estado);
-		// TODO Auto-generated constructor stub
+	public ReclamoProducto(Date fecha, int nroReclamo, String descripcion, Cliente cliente) {
+		super(fecha, nroReclamo, descripcion, cliente);
 	}
 	
 	public void addProducto(Producto prod, int cantidad) {

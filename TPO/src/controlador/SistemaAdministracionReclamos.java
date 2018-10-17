@@ -1,5 +1,6 @@
 package controlador;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -11,8 +12,13 @@ import negocio.Factura;
 import negocio.ItemFactura;
 import negocio.Producto;
 import negocio.Reclamo;
+import negocio.ReclamoCantidades;
+import negocio.ReclamoFacturacion;
+import negocio.ReclamoFaltantes;
+import negocio.ReclamoProducto;
 import negocio.Reporte;
 import negocio.Usuario;
+import negocio.TiposReclamo;
 
 public class SistemaAdministracionReclamos {
 	private String nombreEmpresa;
@@ -59,27 +65,24 @@ public class SistemaAdministracionReclamos {
 	// ABM PRODUCTOS
 	public Producto AltaProducto(int codProducto, float precio, String nombre, String descripcion) {
 		Producto prod = new Producto(codProducto, precio, nombre, descripcion);
-		this.productos.add(prod);
+		//this.productos.add(prod);
+		/*
+		 * Agregar a DAO productos
+		 * */
 		return prod;
 	}
 	
 	private Producto BuscarProducto(int codProducto) {
-		for (int i = 0; i < this.productos.size(); i++) {
-			if(this.productos.get(i).codProducto == codProducto) {
-				return this.productos.get(i);
-			}
-		}
+		/*
+		 * Consultar a dao y retornar null en caso de exepcion
+		 * */
 		return null;
 	}
 	
 	public void BajaProducto(int codProducto) {
-		if(this.BuscarProducto(codProducto) != null) {
-			for (int i = 0; i < this.productos.size(); i++) {
-				if(this.productos.get(i).codProducto == codProducto) {
-					this.productos.remove(i);
-				}
-			}
-		}
+		/*
+		 * Si existe producto DAO eliminar producto
+		 * */
 	}
 	
 	public void ModificacionProducto(int codProducto, float precio, String nombre, String descripcion) {
@@ -89,5 +92,27 @@ public class SistemaAdministracionReclamos {
 			prod.setNombre(nombre);
 			prod.setPrecio(precio);
 		}
+	}
+
+	
+	// ABM Reclamo
+	public Reclamo CrearReclamo(Date fechaReclamo, int nroReclamo, String descripcion, Cliente cliente, String tipoReclamo) {
+		Reclamo reclamo = null;
+		if(tipoReclamo == TiposReclamo.CANTIDADES.name()) {
+			reclamo = new ReclamoCantidades(fechaReclamo, nroReclamo, descripcion, cliente);
+		} else if (tipoReclamo == TiposReclamo.FACTURACION.name()) {
+			reclamo = new ReclamoFacturacion(fechaReclamo, nroReclamo, descripcion, cliente);
+		} else if (tipoReclamo == TiposReclamo.FALTANTES.name()) {
+			reclamo = new ReclamoFaltantes(fechaReclamo, nroReclamo, descripcion, cliente);
+		} else if (tipoReclamo == TiposReclamo.PRODUCTO.name()) {
+			reclamo = new ReclamoProducto(fechaReclamo, nroReclamo, descripcion, cliente);
+		}
+		if(reclamo != null) {
+			/*
+			 * DAO agregar reclamo
+			 * */
+			//this.reclamos.add(reclamo);
+		}
+		return reclamo;
 	}
 }

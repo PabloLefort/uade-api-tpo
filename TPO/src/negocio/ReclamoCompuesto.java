@@ -6,8 +6,8 @@ import java.util.Collection;
 public class ReclamoCompuesto extends Reclamo {
 	Collection<Reclamo> reclamos;
 
-	public ReclamoCompuesto(Date fecha, int nroReclamo, String descripcion, EstadosReclamo estado) {
-		super(fecha, nroReclamo, descripcion, estado);
+	public ReclamoCompuesto(Date fecha, int nroReclamo, String descripcion, Cliente cliente) {
+		super(fecha, nroReclamo, descripcion, cliente);
 	}
 
 	public void add(Reclamo reclamo) {

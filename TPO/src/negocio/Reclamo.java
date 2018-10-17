@@ -11,12 +11,13 @@ public abstract class Reclamo {
 	private Cliente cliente;
 	private Collection<IObserver> observadores;
 	
-	public Reclamo(Date fecha, int nroReclamo, String descripcion, EstadosReclamo estado) {
+	public Reclamo(Date fecha, int nroReclamo, String descripcion, Cliente cliente) {
 		super();
 		this.fecha = fecha;
 		this.nroReclamo = nroReclamo;
 		this.descripcion = descripcion;
-		this.estado = estado;
+		this.cliente = cliente;
+		this.estado = EstadosReclamo.ABIERTO;
 	}
 
 	public void cerrarReclamo() {
