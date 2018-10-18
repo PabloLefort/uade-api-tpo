@@ -1,0 +1,23 @@
+package controlador;
+
+public class StartControladdor {
+
+	public static void main(String[] args) {
+		private SistemaAdministracionReclamos controlador = new SistemaAdministracionReclamos();
+		controlador.Start();
+	}
+
+}
+
+
+
+public void Start(void) {
+	private Cliente cliente_test = this.AltaCliente("Pepe Pompin", "Avenida La Plata 945","9999-9999", "test@gmail.com", 12345678);
+	private Producto producto_test = this.AltaProducto(3050, 22.50, "producto 1", "test de alta de producto");
+	controlador.ModificacionProducto(3050, 30.70, "producto test", "nueva descripcion");
+	controlador.BajaProducto(3050); 
+	private Reclamo reclamos_test = this.CrearReclamo(20/10/2018, 20062016, "test_reclamo_cantidades", cliente_test, "cantidades");
+	private Reclamo reclamos_test = this.CrearReclamo(20/10/2018, 20062017, "test_reclamo_facturacion", cliente_test, "facturacion");
+	private Reclamo reclamos_test = this.CrearReclamo(20/10/2018, 20062018, "test_reclamo_faltantes", cliente_test, "faltantes");
+	private Reclamo reclamos_test = this.CrearReclamo(20/10/2018, 20062019, "test_reclamo_productos", cliente_test, "productos");
+}
