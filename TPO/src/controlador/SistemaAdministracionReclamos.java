@@ -8,6 +8,7 @@ import java.util.List;
 import javax.swing.text.html.HTMLDocument.Iterator;
 
 import dao.ProductoDAO;
+import dao.UsuarioDAO;
 import excepciones.AccesoException;
 import excepciones.ConexionException;
 import negocio.Cliente;
@@ -64,6 +65,45 @@ public class SistemaAdministracionReclamos {
 		
 		return null;
 	}
+	
+	
+	// LOGIN
+	public Usuario Login(String email, String password){
+		
+		Usuario user;
+
+		//si el formulario falla
+        if (email.isEmpty() || password.isEmpty()) 
+        {
+        	System.out.println("Error: Complete los datos solicitados");	
+        } 
+        else 
+        {
+            //si el formulario pasa la validación
+        	UsuarioDAO UsuDAO = new UsuarioDAO();
+        	
+        	try {
+				
+        		user = UsuDAO.obtenerUsuarioPorMail(email);
+        		
+        		if (user.getPassword().equals(password)){
+					return user;
+				}else{
+					
+					System.out.println("Login incorrecto");					
+				}        		
+        		
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+				return null;
+			}
+        	
+        }		
+		
+		return null;
+		
+	}
+
 	
 	// ABM PRODUCTOS
 	public Producto AltaProducto(int codProducto, float precio, String nombre, String descripcion) {
