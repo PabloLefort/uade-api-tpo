@@ -7,12 +7,12 @@ import java.sql.Statement;
 
 import excepciones.AccesoException;
 import excepciones.ConexionException;
-import excepciones.UsuarioException;
-import negocio.Usuario;
+import excepciones.RolException;
+import negocio.Rol;
 
-public class UsuarioDAO {
+public class RolDAO {
 	
-	public Usuario buscarUsuarioPorMail(String mailUsuario) throws ConexionException, UsuarioException, AccesoException{  
+	public Rol buscarRolPorId(int numero) throws ConexionException, RolException, AccesoException{  
 		Connection con = null;  
 		Statement stmt = null;  
 		ResultSet rs = null;  
@@ -28,7 +28,7 @@ public class UsuarioDAO {
 		} catch (SQLException e1) {
 			throw new AccesoException("Error de acceso");
 		}
-		String SQL = "SELECT  * FROM Usuarios where email = '" + mailUsuario + "'";	
+		String SQL = "SELECT * FROM Rol where id = '" + numero + "'";	
 		try {
 			rs = stmt.executeQuery(SQL);
 		} catch (SQLException e1) {
@@ -36,18 +36,18 @@ public class UsuarioDAO {
 		}
 		try {
 			if(rs.next()){
-				Usuario usuario = new Usuario(rs.getString(1), rs.getString(2), rs.getString(3), null);						
-				return usuario;
+				Rol rol = new Rol(rs.getInt(1), rs.getString(2));
+				return rol;
 			}
 			else{
-				throw new UsuarioException("El mail = " + mailUsuario + " no existe");
+				throw new RolException("El rol con id = " + numero + " no existe");
 			}
 		} catch (SQLException e) {
 			throw new ConexionException("No es posible acceder a los datos");
 		}
 	}
 
-	public void insertarUsuario(String nombre, String email, String password, int idRol) throws ConexionException, AccesoException {
+	public void insertarRol(int cod, String descripcion) throws ConexionException, AccesoException {
 		Connection con = null;  
 		Statement stmt = null;  
 		ResultSet rs = null;  
@@ -63,8 +63,8 @@ public class UsuarioDAO {
 		} catch (SQLException e1) {
 			throw new AccesoException("Error de acceso");
 		}
-		String SQL = "INSERT INTO Usuarios (nombre, email, password, idRol) VALUES (" +
-				nombre + ", " + email + ", " + password + ", " + idRol + ")";
+		String SQL = "INSERT INTO Rol (cod, descripcion) VALUES (" +
+				cod + ", " + descripcion + ")";
 		try {
 			rs = stmt.executeQuery(SQL);
 		} catch (SQLException e1) {

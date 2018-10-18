@@ -1,12 +1,15 @@
 package negocio;
 
 public class Rol {
+	int cod;
 	String descripcion;
 	
-	public Rol(String descripcion) {
+	public Rol(int cod, String descripcion) {
+		super();
+		this.cod = cod;
 		this.descripcion = descripcion;
 	}
-	
+
 	public String getDescipcion() {
 		return this.descripcion;
 	}

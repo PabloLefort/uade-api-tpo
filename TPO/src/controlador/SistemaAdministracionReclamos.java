@@ -8,9 +8,11 @@ import java.util.List;
 import javax.swing.text.html.HTMLDocument.Iterator;
 
 import dao.ProductoDAO;
+import dao.RolDAO;
 import dao.UsuarioDAO;
 import excepciones.AccesoException;
 import excepciones.ConexionException;
+import excepciones.RolException;
 import negocio.Cliente;
 import negocio.Factura;
 import negocio.ItemFactura;
@@ -21,6 +23,7 @@ import negocio.ReclamoFacturacion;
 import negocio.ReclamoFaltantes;
 import negocio.ReclamoProducto;
 import negocio.Reporte;
+import negocio.Rol;
 import negocio.Usuario;
 import negocio.TiposReclamo;
 
@@ -67,6 +70,37 @@ public class SistemaAdministracionReclamos {
 	}
 	
 	
+	// ABM Usuario
+	public Usuario AltaUsuario(String nombre, String email, String password, int idRol) {
+		UsuarioDAO usuDAO = new UsuarioDAO();
+		RolDAO rolDAO = new RolDAO();
+		Rol rol = null;
+		try {
+			rol = rolDAO.buscarRolPorId(idRol);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		Usuario usuario = new Usuario(nombre, email, password, rol);
+		try {
+			usuDAO.insertarUsuario(nombre, email, password, idRol);
+			return usuario;
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return null;
+	}
+	
+	public Usuario BuscarUsuario(String email) {
+		UsuarioDAO UsuDAO = new UsuarioDAO();
+    	try {
+    		return UsuDAO.buscarUsuarioPorMail(email);    		
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return null;
+		}
+	}
+	
+	
 	// LOGIN
 	public Usuario Login(String email, String password){
 		
@@ -84,7 +118,7 @@ public class SistemaAdministracionReclamos {
         	
         	try {
 				
-        		user = UsuDAO.obtenerUsuarioPorMail(email);
+        		user = UsuDAO.buscarUsuarioPorMail(email);
         		
         		if (user.getPassword().equals(password)){
 					return user;
