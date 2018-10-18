@@ -7,6 +7,9 @@ import java.util.List;
 
 import javax.swing.text.html.HTMLDocument.Iterator;
 
+import dao.ProductoDAO;
+import excepciones.AccesoException;
+import excepciones.ConexionException;
 import negocio.Cliente;
 import negocio.Factura;
 import negocio.ItemFactura;
@@ -65,32 +68,46 @@ public class SistemaAdministracionReclamos {
 	// ABM PRODUCTOS
 	public Producto AltaProducto(int codProducto, float precio, String nombre, String descripcion) {
 		Producto prod = new Producto(codProducto, precio, nombre, descripcion);
-		//this.productos.add(prod);
-		/*
-		 * Agregar a DAO productos
-		 * */
+		ProductoDAO prodDao = new ProductoDAO();
+		try {
+			prodDao.insertarProducto(codProducto, precio, nombre, descripcion);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 		return prod;
 	}
 	
 	private Producto BuscarProducto(int codProducto) {
-		/*
-		 * Consultar a dao y retornar null en caso de exepcion
-		 * */
+		try {
+			ProductoDAO prodDao = new ProductoDAO();
+			return prodDao.obtenerProductoPorId(codProducto);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 		return null;
 	}
 	
 	public void BajaProducto(int codProducto) {
-		/*
-		 * Si existe producto DAO eliminar producto
-		 * */
+		Producto prod = this.BuscarProducto(codProducto);
+		if(prod != null) {
+			ProductoDAO prodDao = new ProductoDAO();
+			try {
+				prodDao.eliminarProductoPorId(codProducto);
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+		}
 	}
 	
 	public void ModificacionProducto(int codProducto, float precio, String nombre, String descripcion) {
 		Producto prod = this.BuscarProducto(codProducto);
 		if(prod != null) {
-			prod.setDescripcion(descripcion);
-			prod.setNombre(nombre);
-			prod.setPrecio(precio);
+			ProductoDAO prodDao = new ProductoDAO();
+			try {
+				prodDao.modificarProducto(codProducto, precio, nombre, descripcion);
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
 		}
 	}
 
