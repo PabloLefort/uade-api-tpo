@@ -15,4 +15,12 @@ public class ReclamoFaltantes extends Reclamo {
 		this.cantidad = cantidad;
 	}
 
+	public Factura getFactura() {
+		return this.factura;
+	}
+
+	public int getCantidad() {
+		return this.cantidad;
+	}
+
 }

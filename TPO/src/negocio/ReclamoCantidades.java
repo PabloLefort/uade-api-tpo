@@ -14,5 +14,9 @@ public class ReclamoCantidades extends Reclamo {
 	public void addProducto(Producto prod, int cantidad) {
 		this.prod = prod;
 		this.item = new ItemReclamoCantidad(cantidad);
+	}
+
+	public ItemReclamoCantidad getItemReclamo() {
+		return this.item;
 	}	
 }

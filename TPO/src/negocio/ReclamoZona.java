@@ -13,4 +13,8 @@ public class ReclamoZona extends Reclamo {
 		this.zona = zona;
 	}
 
+	public String getZona() {
+		return this.zona;
+	}
+
 }

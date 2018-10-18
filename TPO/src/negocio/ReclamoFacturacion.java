@@ -1,6 +1,7 @@
 package negocio;
 
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.Collection;
 
 public class ReclamoFacturacion extends Reclamo {
@@ -12,5 +13,9 @@ public class ReclamoFacturacion extends Reclamo {
 
 	public void addFactura(Factura factura) {
 		this.facturas.add(factura);
+	}
+
+	public Collection<Factura> getFacturas() {
+		return this.facturas;
 	}
 }

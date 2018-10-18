@@ -14,4 +14,8 @@ public class ReclamoProducto extends Reclamo {
 		this.prod = prod;
 		this.cantidad = cantidad;
 	}
+
+	public Producto getProducto() {
+		return this.prod;
+	}
 }
