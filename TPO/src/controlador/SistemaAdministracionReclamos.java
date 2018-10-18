@@ -206,4 +206,16 @@ public class SistemaAdministracionReclamos {
 		}
 		return reclamo;
 	}
+	
+	
+	// PROCESAR RECLAMO
+	public void ProcesarReclamo(int reclamoID) {
+		ReclamoDAO recDAO = new ReclamoDAO();
+		Reclamo rec = null;
+		
+		rec = recDAO.buscarReclamoPorId(reclamoID);
+		if(rec.getClass().getName() == ReclamoProducto.class.getName()) {
+			
+		}
+	}
 }
