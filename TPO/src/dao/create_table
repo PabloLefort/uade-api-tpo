@@ -1,0 +1,43 @@
+create table Usuarios
+(
+	idUsuario int identity,
+	nombre varchar(20),
+	mail varchar(50),
+	password varchar(20),
+	constraint user_pk primary key(idUsuario)
+)
+go
+create table Reclamos
+(
+	nroReclamo int identity,
+	descripcion varchar(80),
+	estado varchar(20),
+	fecha date,
+	constraint claim_pk primary key(nroReclamo)
+)
+go 
+create table Cliente
+(
+	idCliente int identity,
+	domicilio varchar(20),
+	mail varchar(50),
+	telefono varchar(20),
+	constraint client_pk primary key(idCliente)
+)
+go 
+create table Rol
+(
+	idRol int identity,
+	descripcion varchar(50),
+	constraint role_pk primary key(idRol)
+)
+go 
+create table Producto
+(
+	idProducto int identity,
+	precio float,
+	nombre varchar(50),
+	descripcion varchar(80),
+	constraint product_pk primary key(idProducto)
+)
+go  
