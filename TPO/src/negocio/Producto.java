@@ -1,6 +1,6 @@
 package negocio;
 
-public class Producto {
+public class Producto extends Entidad {
 
 	public int codProducto;
 	public float precio;
@@ -29,14 +29,6 @@ public class Producto {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
-	}
-
-	public String getDescripcion() {
-		return descripcion;
-	}
-
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
 	}
 
 	public int getCodigo() {

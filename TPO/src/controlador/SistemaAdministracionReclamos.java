@@ -190,13 +190,13 @@ public class SistemaAdministracionReclamos {
 	public Reclamo CrearReclamo(Date fechaReclamo, int nroReclamo, String descripcion, Cliente cliente, String tipoReclamo) {
 		Reclamo reclamo = null;
 		if(tipoReclamo == TiposReclamo.CANTIDADES.name()) {
-			reclamo = new ReclamoCantidades(fechaReclamo, nroReclamo, descripcion, cliente);
+			//reclamo = new ReclamoCantidades(fechaReclamo, nroReclamo, descripcion, cliente);
 		} else if (tipoReclamo == TiposReclamo.FACTURACION.name()) {
 			reclamo = new ReclamoFacturacion(fechaReclamo, nroReclamo, descripcion, cliente);
 		} else if (tipoReclamo == TiposReclamo.FALTANTES.name()) {
 			reclamo = new ReclamoFaltantes(fechaReclamo, nroReclamo, descripcion, cliente);
 		} else if (tipoReclamo == TiposReclamo.PRODUCTO.name()) {
-			reclamo = new ReclamoProducto(fechaReclamo, nroReclamo, descripcion, cliente);
+			//reclamo = new ReclamoProducto(fechaReclamo, nroReclamo, descripcion, cliente);
 		}
 		if(reclamo != null) {
 			/*
@@ -210,12 +210,6 @@ public class SistemaAdministracionReclamos {
 	
 	// PROCESAR RECLAMO
 	public void ProcesarReclamo(int reclamoID) {
-		ReclamoDAO recDAO = new ReclamoDAO();
-		Reclamo rec = null;
 		
-		rec = recDAO.buscarReclamoPorId(reclamoID);
-		if(rec.getClass().getName() == ReclamoProducto.class.getName()) {
-			
-		}
 	}
 }
