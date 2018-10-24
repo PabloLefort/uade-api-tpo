@@ -41,6 +41,7 @@ public class ConexionPool {
 		long tiempoInicialNanoSegundos = getTime();
 		String labelPrefixNullConnection = ConexionPool.class + " newConexion: conexión NULL entregada en ";
 		String labelPrefixConnection = ConexionPool.class + " newConexion: conexión entregada en ";
+		
 		if (ULTIMA_POSICION_LIBRE != (-1)) {
 			boolean obtenida = false;
 			Conexion conexion = conexiones[ULTIMA_POSICION_LIBRE];
