@@ -8,6 +8,7 @@ import java.util.List;
 import javax.swing.text.html.HTMLDocument.Iterator;
 
 import dao.ClienteDAO;
+import dao.LoginDAO;
 import dao.ProductoDAO;
 import dao.RolDAO;
 import dao.UsuarioDAO;
@@ -115,41 +116,32 @@ public class SistemaAdministracionReclamos {
 	
 	
 	// LOGIN
-	public Usuario Login(String email, String password){
-		
-		Usuario user;
+    public Usuario Login(String email, String password){
+        
+        //si el formulario falla
+        if (email.isEmpty() || password.isEmpty()) {
+             System.out.println("Error: Complete los datos solicitados");    
+        }
+        else {
+                //si el formulario pasa la validacion
 
-		//si el formulario falla
-        if (email.isEmpty() || password.isEmpty()) 
-        {
-        	System.out.println("Error: Complete los datos solicitados");	
-        } 
-        else 
-        {
-            //si el formulario pasa la validación
-        	UsuarioDAO UsuDAO = new UsuarioDAO();
-        	
-        	try {
-				
-        		user = UsuDAO.buscarUsuarioPorMail(email);
-        		
-        		if (user.getPassword().equals(password)){
-					return user;
-				}else{
-					
-					System.out.println("Login incorrecto");					
-				}        		
-        		
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
-				return null;
-			}
-        	
-        }		
-		
+            Usuario user = null;
+            UsuarioDAO UsuDAO = new UsuarioDAO();
+            LoginDAO login = null;
+            
+            try {
+                
+                user = login.autenticarUsuario(email, password);
+                
+                return user;                              
+            } catch (Exception e) {
+                
+                System.out.println(e.getMessage());                
+            }    
+        }
 		return null;
-		
-	}
+    }
+
 
 	
 	// ABM PRODUCTOS
