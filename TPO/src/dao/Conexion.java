@@ -19,7 +19,7 @@ public class Conexion {
 		this.conexion = conexion;
 	}
 
-	public Boolean getEstatdo() {
+	public Boolean getEstado() {
 		return estado;
 	}
 
