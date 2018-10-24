@@ -1,12 +1,18 @@
 package controlador;
 
-public class StartControladdor {
+import dao.ConexionPool;
+
+public class StartControlador {
 
 	public static void main(String[] args) {
-		private SistemaAdministracionReclamos controlador = new SistemaAdministracionReclamos();
-		ConexionPool.init();
-		controlador.Start();
-		ConexionPool.clean();
+		SistemaAdministracionReclamos controlador = new SistemaAdministracionReclamos();
+		try {
+			ConexionPool.init();
+			controlador.Start();
+			ConexionPool.clean();
+		} catch (Throwable e) {
+			System.out.println(e.getMessage());
+		}
 	}
 
 }

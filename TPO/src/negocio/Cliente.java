@@ -4,7 +4,7 @@ import java.util.Collection;
 
 import view.ClienteView;
 
-public class Cliente {
+public class Cliente extends Entidad {
 	private String nombre;
 	private String domicilio;
 	private String email;

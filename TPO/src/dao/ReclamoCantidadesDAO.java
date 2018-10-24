@@ -1,100 +1,120 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import excepciones.AccesoException;
+import excepciones.ClienteException;
 import excepciones.ConexionException;
+import excepciones.ProductoException;
 import excepciones.ReclamoException;
 import negocio.Cliente;
+import negocio.ItemReclamoCantidad;
 import negocio.Producto;
 import negocio.ReclamoCantidades;
 
 public class ReclamoCantidadesDAO {
 	
-	public ReclamoCantidades obtenerReclamoPorId(int idReclamo) throws ConexionException, ReclamoException, AccesoException{  
-		Connection con = null;  
-		Statement stmt = null;  
-		ResultSet rs = null;  
-		try {    
-			con = ConnectionFactory.getInstancia().getConection();
+	private static ReclamoCantidadesDAO instancia;	
+	
+	public ReclamoCantidadesDAO(){};
+	
+	public static ReclamoCantidadesDAO getInstancia(){
+		if(instancia == null){
+			instancia = new ReclamoCantidadesDAO();
 		}
-		catch (ClassNotFoundException | SQLException e) {
-			throw new ConexionException("No esta disponible el acceso al Servidor");
-		}
-		
-		try {
-			stmt = con.createStatement();
-		} catch (SQLException e1) {
-			throw new AccesoException("Error de acceso");
-		}
-		String SQL  = "SELECT  * FROM Reclamo r JOIN ReclamoCantidades rp ON r.Id = rp.IdReclamo "
-				+ "JOIN Clientes c on c.Id = r.IdCliente"
-				+ " where r.Id = '" + idReclamo + "'";
-
-		try {
-			rs = stmt.executeQuery(SQL);
-		} catch (SQLException e1) {
-			throw new AccesoException("Error de consulta");
-		}
-		try {
-			if(rs.next()){			
-				Cliente cliente = new Cliente(rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(9),rs.getInt(10));
-				
-				ReclamoCantidades reclamo = new ReclamoCantidades(rs.getDate(3), rs.getInt(2), rs.getString(4), cliente);
-				
-				String SQLItem = "SELECT * FROM ItemReclamoCantidad ic JOIN Producto p ON it.IdProducto = p.Id"
-						+ " where Id = '" + reclamo.getNroReclamo() + "'";
-				
-				try {
-					rs = stmt.executeQuery(SQLItem);
-				} catch (SQLException e1) {
-					throw new AccesoException("Error de consulta");
-				}
-				//Agrego los productos relacionados al reclamo.
-				while(rs.next()) 
-				{					
-					reclamo.addProducto(new Producto(rs.getInt(2), rs.getFloat(2), rs.getString(3),rs.getString(3)), rs.getInt(11));
-				}
-				
-				return reclamo;
-			}
-			else{
-				throw new ReclamoException("El reclamo id = " + idReclamo + " no existe");
-			}
-		} catch (SQLException e) {
-			throw new ConexionException("No es posible acceder a los datos");
-		}
+		return instancia;
 	}
 	
-	public void insertarReclamoCantidades(ReclamoCantidades reclamo) throws ConexionException, ReclamoException, AccesoException{  
-		Connection con = null;  
-		Statement stmt = null;  
-		ResultSet rs = null;  
-		try {    
-			con = ConnectionFactory.getInstancia().getConection();
-		}
-		catch (ClassNotFoundException | SQLException e) {
-			throw new ConexionException("No esta disponible el acceso al Servidor");
-		}
+	public void save(ReclamoCantidades reclamo) throws ConexionException, ReclamoException, AccesoException {
+		
+		String SQL = "INSERT INTO Reclamo "
+				+ "VALUES ('" + reclamo.getDescripcion() + "', "
+				+ "" + reclamo.getEstado().name() + ", "
+				+ "'" + reclamo.getFecha() + "', "
+				+ "'" + reclamo.getCliente().getId() + "')";
 		
 		try {
-			stmt = con.createStatement();
-		} catch (SQLException e1) {
-			throw new AccesoException("Error de acceso");
-		}
-		String SQL = "INSERT INTO Reclamo VALUES ('" + reclamo.getDescripcion() + "','" + reclamo.getFecha() + "','" + reclamo.getCliente().getDni() + "')";
-		
-		try {
-			rs = stmt.executeQuery(SQL);
-			int insertId = rs.getInt("id");
-			SQL = "INSERT INTO ReclamoCantidades VALUES ('" + insertId + "','" + reclamo.getItemReclamo().getProducto() + "','" + reclamo.getItemReclamo().getCantidad() + "')";
+			Connection con = ConexionPool.newConexion();
+			PreparedStatement stmt = con.prepareStatement(SQL);
+	        stmt.execute();
+	        ResultSet rs = stmt.getGeneratedKeys();
+	        int insertId = 0;
+	        if (rs.next()) {
+	            insertId = rs.getInt(1);
+	        }
+				
+			SQL = "INSERT INTO Producto "
+						+ "VALUES ('" + insertId + "', "
+						+ "" + reclamo.getItemReclamoCantidad().getProducto().getId() + ", "
+						+ "'" + reclamo.getItemReclamoCantidad().getCantidad() + "')";
+				
+			stmt = con.prepareStatement(SQL);
+	        stmt.execute();
+	        ConexionPool.closeConexion(con);
+	        
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}        
+	}
 
-			rs = stmt.executeQuery(SQL);
+	public void update(ReclamoCantidades reclamo) throws ConexionException, ReclamoException, AccesoException {
+
+		String SQL = "UPDATE Reclamo "
+				+ "Descripcion = '" + reclamo.getDescripcion() + "', "
+				+ "Estado = '" + reclamo.getEstado().name() + "', "
+				+ "Fecha = '" + reclamo.getFecha() + "', "
+				+ "IdCliente = '" + reclamo.getCliente().getId() + "'"
+				+ " WHERE Id = '" + reclamo.getId() + "'";
+		try {
+			Connection con = ConexionPool.newConexion();
+			PreparedStatement stmt = con.prepareStatement(SQL);
+	        stmt.execute();
+			
+			SQL = "UPDATE ReclamoCantidad "					
+					+ "SET IdProducto = '" + reclamo.getItemReclamoCantidad().getProducto().getId() + "', "
+					+ "cantidad = '" + reclamo.getItemReclamoCantidad().getCantidad() + "', "
+					+ " WHERE Id = '" + reclamo.getId() + "'";
+			
+			stmt = con.prepareStatement(SQL);
+	        stmt.execute();
+	        ConexionPool.closeConexion(con);
+	        
 		} catch (SQLException e1) {
 			throw new AccesoException("Error de consulta");
-		}
+		}	
 	}
+
+	public ReclamoCantidades getById(int id) throws ConexionException, ReclamoException, AccesoException, ClienteException {
+		
+		String SQL = "SELECT * FROM Reclamo r "
+				+ "JOIN ReclamoCantidad rp ON r.Id = rp.IdReclamo "
+				+ "JOIN Producto p ON rp.IdProducto = p.Id"
+				+ "where id = '" + id + "'";
+				
+		try {
+			
+			Connection con = ConexionPool.newConexion();
+			PreparedStatement stmt = con.prepareStatement(SQL);
+			ResultSet rs = stmt.executeQuery();
+			
+			if(rs.next()){
+				
+				Cliente cliente = new ClienteDAO().getById(rs.getInt(4));
+				Producto producto = new ProductoDAO().obtenerProductoPorId(rs.getInt(7));
+				ItemReclamoCantidad item = new ItemReclamoCantidad(producto, rs.getInt(8));
+				
+				ReclamoCantidades reclamo = new ReclamoCantidades(rs.getDate(3), rs.getInt(0), rs.getString(1), cliente, item);
+				return reclamo;
+				
+			}
+		} catch (SQLException | ProductoException e1) {
+			throw new AccesoException("Error de consulta");
+		}
+		return null;
+	}
+	
 }

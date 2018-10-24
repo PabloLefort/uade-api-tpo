@@ -3,10 +3,9 @@ package negocio;
 import java.sql.Date;
 import java.util.Collection;
 
-public abstract class Reclamo {
+public abstract class Reclamo extends Entidad {
 	private Date fecha;
 	private int nroReclamo;
-	private String descripcion;
 	private EstadosReclamo estado;
 	private Cliente cliente;
 	private Collection<IObserver> observadores;
@@ -39,11 +38,7 @@ public abstract class Reclamo {
 	public EstadosReclamo getEstado() {
 		return this.estado;
 	}
-	
-	public String getDescripcion() {
-		return this.descripcion;
-	}
-	
+		
 	public Cliente getCliente() {
 		return this.cliente;
 	}
@@ -62,4 +57,6 @@ public abstract class Reclamo {
 	public void procesar(TratamientoStrategy estrategia) {
 		estrategia.ProcesarReclamo();
 	}
+	
+	public abstract String getTipoReclamo();
 }

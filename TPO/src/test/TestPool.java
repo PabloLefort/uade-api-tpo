@@ -1,4 +1,4 @@
-package testPool.main;
+package test;
 
 import java.sql.Connection;
 
