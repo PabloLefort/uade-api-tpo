@@ -1,9 +1,9 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import excepciones.AccesoException;
 import excepciones.ZonaException;
@@ -12,89 +12,68 @@ import negocio.Zona;
 
 public class ZonaDAO {
 
+	private static ZonaDAO instancia;
 	
-	public Zona GetById(int id) throws ConexionException, AccesoException, ZonaException	{
-		Connection con = null;  
-		Statement stmt = null;  
-		ResultSet rs = null;  
-		try {    
-			con = ConnectionFactory.getInstancia().getConection();
+	
+	public ZonaDAO(){};
+	
+	public static ZonaDAO getInstancia(){
+		if(instancia == null){
+			instancia = new ZonaDAO();
 		}
-		catch (ClassNotFoundException | SQLException e) {
-			throw new ConexionException("No esta disponible el acceso al Servidor");
-		}
+		return instancia;
+	}
+	
+	
+	public Zona getById(int id) throws ConexionException, AccesoException, ZonaException	{
 		
-		try {
-			stmt = con.createStatement();
-		} catch (SQLException e1) {
-			throw new AccesoException("Error de acceso");
-		}
 		String SQL = "SELECT * FROM Zona where id = '" + id + "'";
-				
+
 		try {
-			rs = stmt.executeQuery(SQL);
-		} catch (SQLException e1) {
-			throw new AccesoException("Error de consulta");
-		}
-		try {
+			Connection con = ConexionPool.newConexion();
+			PreparedStatement stmt = con.prepareStatement(SQL);
+			ResultSet rs = stmt.executeQuery();
+			
 			if(rs.next()){
 				Zona zona = new Zona(rs.getInt(0), rs.getString(1));
 				return zona;
 			}
-			else{
-				throw new ZonaException("El zona con id " + id + " no existe");
-			}
-		} catch (SQLException e) {
-			throw new ConexionException("No es posible acceder a los datos");
+		
+		} catch (SQLException e1) {
+			throw new AccesoException("Error de consulta");
 		}
+		return null;
 	}
 	
-	public void Update(Zona zona) throws ConexionException, AccesoException, ZonaException	{
-		Connection con = null;  
-		Statement stmt = null;  
-		try {    
-			con = ConnectionFactory.getInstancia().getConection();
-		}
-		catch (ClassNotFoundException | SQLException e) {
-			throw new ConexionException("No esta disponible el acceso al Servidor");
-		}
+	public void update(Zona zona) throws ConexionException, AccesoException, ZonaException	{
 		
-		try {
-			stmt = con.createStatement();
-		} catch (SQLException e1) {
-			throw new AccesoException("Error de acceso");
-		}
 		String SQL = "UPDATE Zona "
 				+ "SET Descripcion = '" + zona.getDescripcion() + "'"
 				+ " WHERE Id = '" + zona.getId() + "'";
+		
 		try {
-			stmt.execute(SQL);
+			Connection con = ConexionPool.newConexion();
+			PreparedStatement stmt = con.prepareStatement(SQL);
+			stmt.execute();
+			
 		} catch (SQLException e1) {
 			throw new AccesoException("Error de consulta");
 		}
 	}
 
-	public void Save(Zona zona) throws ConexionException, AccesoException, ZonaException	{
-		Connection con = null;  
-		Statement stmt = null;  
-		try {    
-			con = ConnectionFactory.getInstancia().getConection();
-		}
-		catch (ClassNotFoundException | SQLException e) {
-			throw new ConexionException("No esta disponible el acceso al Servidor");
-		}
-		
-		try {
-			stmt = con.createStatement();
-		} catch (SQLException e1) {
-			throw new AccesoException("Error de acceso");
-		}
+	public void save(Zona zona) throws ConexionException, AccesoException, ZonaException	{
+
 		String SQL = "INSERT INTO Zona "
 				+ "VALUES ('" + zona.getDescripcion() + "')";
 		try {
-			stmt.execute(SQL);
-		} catch (SQLException e1) {
-			throw new AccesoException("Error de consulta");
-		}
+			Connection con = ConexionPool.newConexion();
+			PreparedStatement stmt = con.prepareStatement(SQL);
+	        stmt.execute();
+	        ConexionPool.closeConexion(con);
+	        
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}   
 	}
 }
