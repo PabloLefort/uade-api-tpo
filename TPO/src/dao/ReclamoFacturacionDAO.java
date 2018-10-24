@@ -11,8 +11,13 @@ import excepciones.ConexionException;
 import excepciones.ReclamoException;
 import negocio.Cliente;
 import negocio.Factura;
+import negocio.Reclamo;
 import negocio.ReclamoFacturacion;
 
 public class ReclamoFacturacionDAO {
+
+	public ReclamoFacturacion GetById(int int1) {
+		return null;
+	}
 	
 }

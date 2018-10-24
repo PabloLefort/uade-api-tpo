@@ -18,4 +18,8 @@ public class ReclamoZona extends Reclamo {
 		return this.zona;
 	}
 
+	@Override
+	public String getTipoReclamo() {
+		return TiposReclamo.ZONA.toString();
+	}
 }

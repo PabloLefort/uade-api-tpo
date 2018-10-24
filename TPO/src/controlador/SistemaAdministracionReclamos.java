@@ -49,16 +49,6 @@ public class SistemaAdministracionReclamos {
 		return this.nombreEmpresa;
 	}
 	
-	public Usuario buscarUsuario(String nombre) {
-		
-		for (Usuario usr : usuarios) {
-			if (usr.getNombre().equals(nombre))
-				return usr;
-		}
-		
-		return null;
-	}
-	
 	public Cliente buscarCliente(int dni) {
 		
 		for (Cliente cli : clientes) {

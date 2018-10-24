@@ -18,4 +18,9 @@ public class ReclamoCantidades extends Reclamo {
 	public ItemReclamoCantidad getItemReclamoCantidad() {
 		return this.item;
 	}	
+
+	@Override
+	public String getTipoReclamo() {
+		return TiposReclamo.CANTIDADES.toString();
+	}
 }
