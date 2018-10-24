@@ -99,7 +99,7 @@ public class ConexionPool {
 				if ((conexiones[posicion] != null) && (conexiones[posicion].getConexion() != null)
 						&& (conexiones[posicion].getConexion().equals(conexion))) {
 					try {
-						conexion.close();
+						conexiones[posicion].getConexion().close();
 					} catch (SQLException e) {
 						e.printStackTrace();
 					}
@@ -112,6 +112,11 @@ public class ConexionPool {
 					conexiones[posicion].setEstado(false);
 					encontrado = true;
 				}
+			}
+			try {
+				conexion.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
 			}
 		}
 		showPerformance(tiempoInicialNanoSegundos, ConexionPool.class + " closeConexion: conexión cerrada en");
