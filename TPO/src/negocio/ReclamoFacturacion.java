@@ -18,4 +18,9 @@ public class ReclamoFacturacion extends Reclamo {
 	public Collection<Factura> getFacturas() {
 		return this.facturas;
 	}
+
+	@Override
+	public String getTipoReclamo() {
+		return TiposReclamo.FACTURACION.toString();
+	}
 }

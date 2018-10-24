@@ -3,18 +3,23 @@ package negocio;
 import java.sql.Date;
 
 public class ReclamoZona extends Reclamo {
-	String zona;
+	private Zona zona;
 
-	public ReclamoZona(Date fecha, int nroReclamo, String descripcion, Cliente cliente) {
+	public ReclamoZona(Date fecha, int nroReclamo, String descripcion, Cliente cliente, Zona zona) {
 		super(fecha, nroReclamo, descripcion, cliente);
+		this.zona = zona;
 	}
 	
-	public void setZona(String zona) {
+	public void setZona(Zona zona) {
 		this.zona = zona;
 	}
 
-	public String getZona() {
+	public Zona getZona() {
 		return this.zona;
 	}
 
+	@Override
+	public String getTipoReclamo() {
+		return TiposReclamo.ZONA.toString();
+	}
 }

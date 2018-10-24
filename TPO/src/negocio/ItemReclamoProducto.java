@@ -1,10 +1,10 @@
 package negocio;
 
-public class ItemReclamoCantidad {
+public class ItemReclamoProducto {
 	private Producto prod;
 	private int cantidad;
 	
-	public ItemReclamoCantidad(Producto prod, int cantidad) {
+	public ItemReclamoProducto(Producto prod, int cantidad) {
 		this.prod = prod;
 		this.cantidad = cantidad;
 	}

@@ -7,10 +7,12 @@ import java.util.List;
 
 import javax.swing.text.html.HTMLDocument.Iterator;
 
+import dao.ClienteDAO;
 import dao.ProductoDAO;
 import dao.RolDAO;
 import dao.UsuarioDAO;
 import excepciones.AccesoException;
+import excepciones.ClienteException;
 import excepciones.ConexionException;
 import excepciones.RolException;
 import negocio.Cliente;
@@ -25,6 +27,7 @@ import negocio.ReclamoProducto;
 import negocio.Reporte;
 import negocio.Rol;
 import negocio.Usuario;
+import view.ClienteView;
 import negocio.TiposReclamo;
 
 public class SistemaAdministracionReclamos {
@@ -37,10 +40,14 @@ public class SistemaAdministracionReclamos {
 	private ArrayList<Producto> productos;
 	
 	public SistemaAdministracionReclamos() {
-		
 	}
 	
-	public void Start(void) {
+	public SistemaAdministracionReclamos(String nombreEmpresa) {
+		this.nombreEmpresa = nombreEmpresa;		
+	}
+	
+	//REVISAR ESTO
+/*	public void Start(void) {
 		Cliente cliente_test = this.AltaCliente("Pepe Pompin", "Avenida La Plata 945","9999-9999", "test@gmail.com", ?);
 		Producto producto_test = this.AltaProducto(?, 22.50, "producto 1", "test de alta de producto");
 		controlador.ModificacionProducto(?, 30.70, "producto test", "nueva descripcion");
@@ -49,7 +56,7 @@ public class SistemaAdministracionReclamos {
 		Reclamo reclamos_test = this.CrearReclamo(20/10/2018, ?, "test_reclamo_facturacion", cliente_test, "facturacion");
 		Reclamo reclamos_test = this.CrearReclamo(20/10/2018, ?, "test_reclamo_faltantes", cliente_test, "faltantes");
 		Reclamo reclamos_test = this.CrearReclamo(20/10/2018, ?, "test_reclamo_productos", cliente_test, "productos");
-	}
+	}*/
 
 	
 	public Cliente AltaCliente(String nombre, String domicilio, String telefono, String email, int dni) {
@@ -71,16 +78,10 @@ public class SistemaAdministracionReclamos {
 		return null;
 	}
 	
-	public Cliente buscarCliente(int dni) {
-		
-		for (Cliente cli : clientes) {
-			if (cli.getDni() == dni)
-				return cli;
-		}
-		
-		return null;
+	public ClienteView buscarCliente(int dni) throws ConexionException, AccesoException, ClienteException {		
+		Cliente cliente = new ClienteDAO().getInstancia().getById(dni);
+		return cliente.toView();
 	}
-	
 	
 	// ABM Usuario
 	public Usuario AltaUsuario(String nombre, String email, String password, int idRol) {
@@ -202,13 +203,13 @@ public class SistemaAdministracionReclamos {
 	public Reclamo CrearReclamo(Date fechaReclamo, int nroReclamo, String descripcion, Cliente cliente, String tipoReclamo) {
 		Reclamo reclamo = null;
 		if(tipoReclamo == TiposReclamo.CANTIDADES.name()) {
-			reclamo = new ReclamoCantidades(fechaReclamo, nroReclamo, descripcion, cliente);
+			//reclamo = new ReclamoCantidades(fechaReclamo, nroReclamo, descripcion, cliente);
 		} else if (tipoReclamo == TiposReclamo.FACTURACION.name()) {
 			reclamo = new ReclamoFacturacion(fechaReclamo, nroReclamo, descripcion, cliente);
 		} else if (tipoReclamo == TiposReclamo.FALTANTES.name()) {
 			reclamo = new ReclamoFaltantes(fechaReclamo, nroReclamo, descripcion, cliente);
 		} else if (tipoReclamo == TiposReclamo.PRODUCTO.name()) {
-			reclamo = new ReclamoProducto(fechaReclamo, nroReclamo, descripcion, cliente);
+			//reclamo = new ReclamoProducto(fechaReclamo, nroReclamo, descripcion, cliente);
 		}
 		if(reclamo != null) {
 			/*
@@ -222,12 +223,6 @@ public class SistemaAdministracionReclamos {
 	
 	// PROCESAR RECLAMO
 	public void ProcesarReclamo(int reclamoID) {
-		ReclamoDAO recDAO = new ReclamoDAO();
-		Reclamo rec = null;
 		
-		rec = recDAO.buscarReclamoPorId(reclamoID);
-		if(rec.getClass().getName() == ReclamoProducto.class.getName()) {
-			
-		}
 	}
 }

@@ -21,4 +21,10 @@ public class ReclamoCompuesto extends Reclamo {
 	public void cerrarReclamo() {
 		this.reclamos.forEach(Reclamo::cerrarReclamo);
 	}
+
+	@Override
+	public String getTipoReclamo() {
+		return null;
+	}
+	
 }

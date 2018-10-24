@@ -3,19 +3,24 @@ package negocio;
 import java.sql.Date;
 
 public class ReclamoProducto extends Reclamo {
-	Producto prod;
-	int cantidad;
+	ItemReclamoProducto item;	
 
-	public ReclamoProducto(Date fecha, int nroReclamo, String descripcion, Cliente cliente) {
+	public ReclamoProducto(Date fecha, int nroReclamo, String descripcion, Cliente cliente, ItemReclamoProducto item) {
 		super(fecha, nroReclamo, descripcion, cliente);
+		this.item = item;
 	}
 	
-	public void addProducto(Producto prod, int cantidad) {
-		this.prod = prod;
-		this.cantidad = cantidad;
+	public void addItemReclamoProducto(Producto prod, int cantidad) {
+		item.setProducto(prod);
+		item.setCantidad(cantidad);
 	}
 
-	public Producto getProducto() {
-		return this.prod;
+	public ItemReclamoProducto getItemReclamoProducto() {
+		return this.item;
+	}
+	
+	@Override
+	public String getTipoReclamo() {
+		return TiposReclamo.PRODUCTO.toString();
 	}
 }
