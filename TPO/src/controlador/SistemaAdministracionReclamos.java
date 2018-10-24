@@ -7,10 +7,12 @@ import java.util.List;
 
 import javax.swing.text.html.HTMLDocument.Iterator;
 
+import dao.ClienteDAO;
 import dao.ProductoDAO;
 import dao.RolDAO;
 import dao.UsuarioDAO;
 import excepciones.AccesoException;
+import excepciones.ClienteException;
 import excepciones.ConexionException;
 import excepciones.RolException;
 import negocio.Cliente;
@@ -25,6 +27,7 @@ import negocio.ReclamoProducto;
 import negocio.Reporte;
 import negocio.Rol;
 import negocio.Usuario;
+import view.ClienteView;
 import negocio.TiposReclamo;
 
 public class SistemaAdministracionReclamos {
@@ -37,7 +40,7 @@ public class SistemaAdministracionReclamos {
 	private ArrayList<Producto> productos;
 	
 	public SistemaAdministracionReclamos() {
-		
+	
 	}
 	
 	public void Start() {
@@ -62,16 +65,20 @@ public class SistemaAdministracionReclamos {
 		return this.nombreEmpresa;
 	}
 	
-	public Cliente buscarCliente(int dni) {
+	public Usuario buscarUsuario(String nombre) {
 		
-		for (Cliente cli : clientes) {
-			if (cli.getDni() == dni)
-				return cli;
+		for (Usuario usr : usuarios) {
+			if (usr.getNombre().equals(nombre))
+				return usr;
 		}
 		
 		return null;
 	}
 	
+	public ClienteView buscarCliente(int dni) throws ConexionException, AccesoException, ClienteException {		
+		Cliente cliente = new ClienteDAO().getInstancia().getById(dni);
+		return cliente.toView();
+	}
 	
 	// ABM Usuario
 	public Usuario AltaUsuario(String nombre, String email, String password, int idRol) {

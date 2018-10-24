@@ -86,19 +86,19 @@ public class ReclamoCompuestoDAO {
 		try {
 			if(tipo == TiposReclamo.CANTIDADES.toString()) {
 				ReclamoCantidadesDAO rcDao = new ReclamoCantidadesDAO();
-				reclamo = rcDao.GetById(id);
+				reclamo = rcDao.getById(id);
 			} else if(tipo == TiposReclamo.FACTURACION.toString()) {
 				ReclamoFacturacionDAO rcDao = new ReclamoFacturacionDAO();
 				reclamo = rcDao.GetById(id);
 			} else if(tipo == TiposReclamo.FALTANTES.toString()) {
 				ReclamoFaltantesDAO rcDao = new ReclamoFaltantesDAO();
-				reclamo = rcDao.GetById(id);
+				reclamo = rcDao.getById(id);
 			} else if(tipo == TiposReclamo.PRODUCTO.toString()) {
 				ReclamoProductoDAO rcDao = new ReclamoProductoDAO();
-				reclamo = rcDao.GetById(id);
+				reclamo = rcDao.getById(id);
 			} else if(tipo == TiposReclamo.ZONA.toString()) {
 				ReclamoZonaDAO rcDao = new ReclamoZonaDAO();
-				reclamo = rcDao.GetById(id);
+				reclamo = rcDao.getById(id);
 			}
 		} catch (Exception e) {
 			throw new ReclamoException("Error de consulta buscando reclamo");
