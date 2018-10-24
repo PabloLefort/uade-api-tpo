@@ -6,30 +6,46 @@ import dao.ConexionPool;
 
 public class TestPool {
 
+	/**
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		try {
 			System.out.println("HOLA !");
-			ConexionPool conexionPool = ConexionPool.build();
-			Connection connection1 = conexionPool.newConexion();
-			Connection connection2 = conexionPool.newConexion();
-			Connection connection3 = conexionPool.newConexion();
-			Connection connection4 = conexionPool.newConexion();
-			Connection connection5 = conexionPool.newConexion();
-			conexionPool.closeConexion(connection1);
-			conexionPool.closeConexion(connection2);
-			conexionPool.closeConexion(connection3);
-			conexionPool.closeConexion(connection4);
-			conexionPool.closeConexion(connection5);
-			connection1 = conexionPool.newConexion();
-			connection2 = conexionPool.newConexion();
-			connection3 = conexionPool.newConexion();
-			connection4 = conexionPool.newConexion();
-			connection5 = conexionPool.newConexion();
-			conexionPool.closeConexion(connection1);
-			conexionPool.closeConexion(connection2);
-			conexionPool.closeConexion(connection3);
-			conexionPool.closeConexion(connection4);
-			conexionPool.closeConexion(connection5);
+			ConexionPool.init();
+			Connection connection1 = ConexionPool.newConexion();
+			Connection connection2 = ConexionPool.newConexion();
+			Connection connection3 = ConexionPool.newConexion();
+			Connection connection4 = ConexionPool.newConexion();
+			Connection connection5 = ConexionPool.newConexion();
+			Connection connection6 = ConexionPool.newConexion();
+			ConexionPool.closeConexion(connection1);
+			ConexionPool.closeConexion(connection2);
+			ConexionPool.closeConexion(connection3);
+			ConexionPool.closeConexion(connection4);
+			ConexionPool.closeConexion(connection5);
+			ConexionPool.closeConexion(connection6);
+			connection1 = ConexionPool.newConexion();
+			connection2 = ConexionPool.newConexion();
+			connection3 = ConexionPool.newConexion();
+			connection4 = ConexionPool.newConexion();
+			connection5 = ConexionPool.newConexion();
+			connection6 = ConexionPool.newConexion();
+			ConexionPool.closeConexion(connection1);
+			ConexionPool.closeConexion(connection2);
+			ConexionPool.closeConexion(connection3);
+			ConexionPool.closeConexion(connection4);
+			ConexionPool.closeConexion(connection5);
+			ConexionPool.closeConexion(connection6);
+			connection1 = ConexionPool.newConexion();
+			connection2 = ConexionPool.newConexion();
+			connection3 = ConexionPool.newConexion();
+			connection4 = ConexionPool.newConexion();
+			connection5 = ConexionPool.newConexion();
+			connection6 = ConexionPool.newConexion();
+			ConexionPool.closeConexion(connection5);
+			connection5 = ConexionPool.newConexion();
+			ConexionPool.clean();
 		} catch (Throwable t) {
 			t.printStackTrace();
 		}
