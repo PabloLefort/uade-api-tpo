@@ -41,23 +41,20 @@ public class SistemaAdministracionReclamos {
 	private ArrayList<Producto> productos;
 	
 	public SistemaAdministracionReclamos() {
+	
 	}
 	
-	public SistemaAdministracionReclamos(String nombreEmpresa) {
-		this.nombreEmpresa = nombreEmpresa;		
+	public void Start() {
+		Cliente cliente_test = this.AltaCliente("Pepe Pompin", "Avenida La Plata 945","9999-9999", "test@gmail.com", 39000123);
+		Producto producto_test = this.AltaProducto(1, (float) 22.50, "producto 1", "test de alta de producto");
+		this.ModificacionProducto(1, (float) 30.70, "producto test", "nueva descripcion");
+		this.BajaProducto(1); 
+		Date date = new Date(2018, 10, 20);
+		Reclamo reclamos_test = this.CrearReclamo(date, 2, "test_reclamo_cantidades", cliente_test, "cantidades");
+		this.CrearReclamo(date, 3, "test_reclamo_facturacion", cliente_test, "facturacion");
+		this.CrearReclamo(date, 4, "test_reclamo_faltantes", cliente_test, "faltantes");
+		this.CrearReclamo(date, 5, "test_reclamo_productos", cliente_test, "productos");
 	}
-	
-	//REVISAR ESTO
-/*	public void Start(void) {
-		Cliente cliente_test = this.AltaCliente("Pepe Pompin", "Avenida La Plata 945","9999-9999", "test@gmail.com", ?);
-		Producto producto_test = this.AltaProducto(?, 22.50, "producto 1", "test de alta de producto");
-		controlador.ModificacionProducto(?, 30.70, "producto test", "nueva descripcion");
-		controlador.BajaProducto(?); 
-		Reclamo reclamos_test = this.CrearReclamo(20/10/2018, ?, "test_reclamo_cantidades", cliente_test, "cantidades");
-		Reclamo reclamos_test = this.CrearReclamo(20/10/2018, ?, "test_reclamo_facturacion", cliente_test, "facturacion");
-		Reclamo reclamos_test = this.CrearReclamo(20/10/2018, ?, "test_reclamo_faltantes", cliente_test, "faltantes");
-		Reclamo reclamos_test = this.CrearReclamo(20/10/2018, ?, "test_reclamo_productos", cliente_test, "productos");
-	}*/
 
 	
 	public Cliente AltaCliente(String nombre, String domicilio, String telefono, String email, int dni) {
