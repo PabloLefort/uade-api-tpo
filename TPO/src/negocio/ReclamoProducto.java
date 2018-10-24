@@ -18,4 +18,9 @@ public class ReclamoProducto extends Reclamo {
 	public ItemReclamoProducto getItemReclamoProducto() {
 		return this.item;
 	}
+	
+	@Override
+	public String getTipoReclamo() {
+		return TiposReclamo.PRODUCTO.toString();
+	}
 }

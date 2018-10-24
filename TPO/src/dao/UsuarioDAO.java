@@ -50,7 +50,6 @@ public class UsuarioDAO {
 	public void insertarUsuario(String nombre, String email, String password, int idRol) throws ConexionException, AccesoException {
 		Connection con = null;  
 		Statement stmt = null;  
-		ResultSet rs = null;  
 		try {    
 			con = ConnectionFactory.getInstancia().getConection();
 		}
@@ -66,7 +65,7 @@ public class UsuarioDAO {
 		String SQL = "INSERT INTO Usuarios (nombre, email, password, idRol) VALUES (" +
 				nombre + ", " + email + ", " + password + ", " + idRol + ")";
 		try {
-			rs = stmt.executeQuery(SQL);
+			stmt.executeQuery(SQL);
 		} catch (SQLException e1) {
 			throw new AccesoException("Error de consulta");
 		}

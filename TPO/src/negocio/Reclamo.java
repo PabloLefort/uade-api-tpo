@@ -57,4 +57,6 @@ public abstract class Reclamo extends Entidad {
 	public void procesar(TratamientoStrategy estrategia) {
 		estrategia.ProcesarReclamo();
 	}
+	
+	public abstract String getTipoReclamo();
 }

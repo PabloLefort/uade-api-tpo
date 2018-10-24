@@ -65,12 +65,10 @@ public class SistemaAdministracionReclamos {
 		return null;
 	}
 	
-	public ClienteView buscarCliente(int dni) throws ConexionException, AccesoException, ClienteException {
-		
+	public ClienteView buscarCliente(int dni) throws ConexionException, AccesoException, ClienteException {		
 		Cliente cliente = new ClienteDAO().getInstancia().getById(dni);
 		return cliente.toView();
 	}
-	
 	
 	// ABM Usuario
 	public Usuario AltaUsuario(String nombre, String email, String password, int idRol) {

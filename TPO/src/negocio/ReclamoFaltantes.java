@@ -23,4 +23,9 @@ public class ReclamoFaltantes extends Reclamo {
 		return this.cantidad;
 	}
 
+	@Override
+	public String getTipoReclamo() {
+		return TiposReclamo.FALTANTES.toString();
+	}
+
 }
