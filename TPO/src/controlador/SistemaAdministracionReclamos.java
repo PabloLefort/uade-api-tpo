@@ -57,22 +57,18 @@ public class SistemaAdministracionReclamos {
 
 	
 	public Cliente AltaCliente(String nombre, String domicilio, String telefono, String email, int dni) {
-		Cliente cliente = new Cliente(nombre, domicilio, telefono, email, dni);
-		return cliente;
+		try {
+			Cliente cliente = new Cliente(nombre, domicilio, telefono, email, dni);
+			ClienteDAO.getInstancia().save(cliente);
+			return cliente;
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return null;
 	}
 	
 	public String getNombreEmpresa() {
 		return this.nombreEmpresa;
-	}
-	
-	public Usuario buscarUsuario(String nombre) {
-		
-		for (Usuario usr : usuarios) {
-			if (usr.getNombre().equals(nombre))
-				return usr;
-		}
-		
-		return null;
 	}
 	
 	public ClienteView buscarCliente(int dni) throws ConexionException, AccesoException, ClienteException {		
