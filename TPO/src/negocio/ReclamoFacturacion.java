@@ -3,7 +3,7 @@ package negocio;
 import java.sql.Date;
 import java.util.Collection;
 
-import services.TratamientoFactory;
+import negocio.strategy.TratamientoFactory;
 
 public class ReclamoFacturacion extends Reclamo {
 	Collection<Factura> facturas;

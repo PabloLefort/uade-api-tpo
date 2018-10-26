@@ -1,4 +1,4 @@
-package services;
+package negocio.strategy;
 
 import negocio.Reclamo;
 import negocio.ReclamoCantidades;

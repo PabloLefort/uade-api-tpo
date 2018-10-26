@@ -2,7 +2,7 @@ package negocio;
 
 import java.sql.Date;
 
-import services.TratamientoFactory;
+import negocio.strategy.TratamientoFactory;
 
 public class ReclamoCantidades extends Reclamo {
 
@@ -11,8 +11,8 @@ public class ReclamoCantidades extends Reclamo {
 	public ReclamoCantidades(Date fecha, int nroReclamo, String descripcion, Cliente cliente,
 			ItemReclamoCantidad item) {
 		super(fecha, nroReclamo, descripcion, cliente);
-		this.item = item;
 		setTratamientoStrategy(TratamientoFactory.build(this));
+		this.item = item;
 	}
 
 	public void addProducto(Producto prod, int cantidad) {

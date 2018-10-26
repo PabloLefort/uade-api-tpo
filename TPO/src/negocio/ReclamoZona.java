@@ -2,7 +2,7 @@ package negocio;
 
 import java.sql.Date;
 
-import services.TratamientoFactory;
+import negocio.strategy.TratamientoFactory;
 
 public class ReclamoZona extends Reclamo {
 	private Zona zona;

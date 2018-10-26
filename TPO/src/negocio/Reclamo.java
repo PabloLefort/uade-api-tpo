@@ -3,7 +3,7 @@ package negocio;
 import java.sql.Date;
 import java.util.Collection;
 
-import services.TratamientoStrategy;
+import negocio.strategy.TratamientoStrategy;
 
 public abstract class Reclamo extends Entidad {
 
@@ -62,7 +62,7 @@ public abstract class Reclamo extends Entidad {
 		return tratamientoStrategy;
 	}
 
-	public void setTratamientoStrategy(TratamientoStrategy tratamientoStrategy) {
+	protected void setTratamientoStrategy(TratamientoStrategy tratamientoStrategy) {
 		this.tratamientoStrategy = tratamientoStrategy;
 	}
 

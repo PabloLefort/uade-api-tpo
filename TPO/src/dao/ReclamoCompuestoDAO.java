@@ -35,7 +35,7 @@ public class ReclamoCompuestoDAO {
 		try {
 			String SQL = "INSERT INTO ReclamoCompuesto " + "VALUES ('" + reclamo_compuesto.getNroReclamo() + "', " + "'"
 					+ reclamo_compuesto.getNroReclamo() + "', " + "'" + reclamo.getNroReclamo() + "', " + "'"
-					+ reclamo.getTipoReclamo() + "')";
+					+ /*reclamo.getTipoReclamo() +*/ "')";
 			stmt.execute(SQL);
 		} catch (SQLException e1) {
 			throw new AccesoException("Error de consulta");

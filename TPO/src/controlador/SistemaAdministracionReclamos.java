@@ -6,7 +6,6 @@ import java.util.Collection;
 import java.util.Scanner;
 
 import dao.ClienteDAO;
-import dao.LoginDAO;
 import dao.ProductoDAO;
 import dao.RolDAO;
 import dao.UsuarioDAO;
@@ -23,11 +22,11 @@ import negocio.Reporte;
 import negocio.Rol;
 import negocio.TiposReclamo;
 import negocio.Usuario;
+import services.Login;
 import view.ClienteView;
 
 public class SistemaAdministracionReclamos {
 
-	private String nombreEmpresa;
 	private Collection<Cliente> clientes;
 	private Collection<Reclamo> reclamos;
 	private Collection<Factura> facturas;
@@ -35,7 +34,7 @@ public class SistemaAdministracionReclamos {
 	private Collection<Reporte> reportes;
 	private ArrayList<Producto> productos;
 	private Scanner scanner = new Scanner(System.in);
-	String email, password;
+	private String email, password;
 
 	public SistemaAdministracionReclamos() {
 
@@ -47,27 +46,29 @@ public class SistemaAdministracionReclamos {
 		email = scanner.nextLine();
 		System.out.println("Ingrese password: ");
 		password = scanner.nextLine();
-		services.Login.login(email, password);
+		if (Login.login(email, password) != null) {
+			System.out.println("Login Exitoso");
+		}
+		scanner.close();
 
-		Cliente cliente_test = this.AltaCliente("Pepe Pompin", "Avenida La Plata 945", "9999-9999", "test@gmail.com",
-				39000123);
-		Producto producto_test = this.AltaProducto(1, (float) 22.50, "producto 1", "test de alta de producto");
-		this.ModificacionProducto(1, (float) 30.70, "producto test", "nueva descripcion");
-		this.BajaProducto(1);
-		Date date = new Date(2018, 10, 20);
-		Reclamo reclamos_test = this.CrearReclamo(date, 2, "test_reclamo_cantidades", cliente_test, "cantidades");
-		this.CrearReclamo(date, 3, "test_reclamo_facturacion", cliente_test, "facturacion");
-		this.CrearReclamo(date, 4, "test_reclamo_faltantes", cliente_test, "faltantes");
-		this.CrearReclamo(date, 5, "test_reclamo_productos", cliente_test, "productos");
+		/*
+		 * Cliente cliente_test = this.AltaCliente("Pepe Pompin",
+		 * "Avenida La Plata 945", "9999-9999", "test@gmail.com", 39000123); Producto
+		 * producto_test = this.AltaProducto(1, (float) 22.50, "producto 1",
+		 * "test de alta de producto"); this.ModificacionProducto(1, (float) 30.70,
+		 * "producto test", "nueva descripcion"); this.BajaProducto(1); Date date = new
+		 * Date(2018, 10, 20); Reclamo reclamos_test = this.CrearReclamo(date, 2,
+		 * "test_reclamo_cantidades", cliente_test, "cantidades");
+		 * this.CrearReclamo(date, 3, "test_reclamo_facturacion", cliente_test,
+		 * "facturacion"); this.CrearReclamo(date, 4, "test_reclamo_faltantes",
+		 * cliente_test, "faltantes"); this.CrearReclamo(date, 5,
+		 * "test_reclamo_productos", cliente_test, "productos");
+		 */
 	}
 
 	public Cliente AltaCliente(String nombre, String domicilio, String telefono, String email, int dni) {
 		Cliente cliente = new Cliente(nombre, domicilio, telefono, email, dni);
 		return cliente;
-	}
-
-	public String getNombreEmpresa() {
-		return this.nombreEmpresa;
 	}
 
 	public Usuario buscarUsuario(String nombre) {
@@ -116,30 +117,24 @@ public class SistemaAdministracionReclamos {
 	}
 
 	// LOGIN
-	public Usuario Login(String email, String password) {
-
-		// si el formulario falla
-		if (email.isEmpty() || password.isEmpty()) {
-			System.out.println("Error: Complete los datos solicitados");
-		} else {
-			// si el formulario pasa la validacion
-
-			Usuario user = null;
-			UsuarioDAO UsuDAO = new UsuarioDAO();
-			LoginDAO login = null;
-
-			try {
-
-				user = login.autenticarUsuario(email, password);
-
-				return user;
-			} catch (Exception e) {
-
-				System.out.println(e.getMessage());
-			}
-		}
-		return null;
-	}
+	/*
+	 * public Usuario Login(String email, String password) {
+	 * 
+	 * // si el formulario falla if (email.isEmpty() || password.isEmpty()) {
+	 * System.out.println("Error: Complete los datos solicitados"); } else { // si
+	 * el formulario pasa la validacion
+	 * 
+	 * Usuario user = null; UsuarioDAO UsuDAO = new UsuarioDAO(); LoginDAO login =
+	 * null;
+	 * 
+	 * try {
+	 * 
+	 * user = login.autenticarUsuario(email, password);
+	 * 
+	 * return user; } catch (Exception e) {
+	 * 
+	 * System.out.println(e.getMessage()); } } return null; }
+	 */
 
 	// ABM PRODUCTOS
 	public Producto AltaProducto(int codProducto, float precio, String nombre, String descripcion) {

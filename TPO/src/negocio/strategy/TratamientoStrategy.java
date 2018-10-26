@@ -1,4 +1,4 @@
-package services;
+package negocio.strategy;
 
 public interface TratamientoStrategy {
 

@@ -7,15 +7,8 @@ import negocio.Usuario;
 
 public class Login {
 
-	private static Boolean INITIALIZED = Boolean.FALSE;
 	private static LoginDAO login = null;
 	private static Scanner scanner = new Scanner(System.in);
-
-	public static void init() throws Throwable {
-		if (!INITIALIZED) {
-			INITIALIZED = Boolean.TRUE;
-		}
-	}
 
 	public static Usuario login(String email, String password) {
 
