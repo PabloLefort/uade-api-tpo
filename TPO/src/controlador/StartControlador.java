@@ -1,6 +1,7 @@
 package controlador;
 
 import services.ConexionPool;
+import services.Login;
 
 public class StartControlador {
 
@@ -8,6 +9,7 @@ public class StartControlador {
 		SistemaAdministracionReclamos controlador = new SistemaAdministracionReclamos();
 		try {
 			ConexionPool.init();
+			Login.init();
 			controlador.Start();
 			ConexionPool.clean();
 		} catch (Throwable e) {

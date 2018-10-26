@@ -3,9 +3,7 @@ package controlador;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
-
-import javax.swing.text.html.HTMLDocument.Iterator;
+import java.util.Scanner;
 
 import dao.ClienteDAO;
 import dao.LoginDAO;
@@ -15,23 +13,20 @@ import dao.UsuarioDAO;
 import excepciones.AccesoException;
 import excepciones.ClienteException;
 import excepciones.ConexionException;
-import excepciones.RolException;
 import negocio.Cliente;
 import negocio.Factura;
-import negocio.ItemFactura;
 import negocio.Producto;
 import negocio.Reclamo;
-import negocio.ReclamoCantidades;
 import negocio.ReclamoFacturacion;
 import negocio.ReclamoFaltantes;
-import negocio.ReclamoProducto;
 import negocio.Reporte;
 import negocio.Rol;
+import negocio.TiposReclamo;
 import negocio.Usuario;
 import view.ClienteView;
-import negocio.TiposReclamo;
 
 public class SistemaAdministracionReclamos {
+
 	private String nombreEmpresa;
 	private Collection<Cliente> clientes;
 	private Collection<Reclamo> reclamos;
@@ -39,12 +34,21 @@ public class SistemaAdministracionReclamos {
 	private Collection<Usuario> usuarios;
 	private Collection<Reporte> reportes;
 	private ArrayList<Producto> productos;
+	private Scanner scanner = new Scanner(System.in);
+	String email, password;
 
 	public SistemaAdministracionReclamos() {
 
 	}
 
 	public void Start() {
+
+		System.out.println("Ingrese usuario: ");
+		email = scanner.nextLine();
+		System.out.println("Ingrese password: ");
+		password = scanner.nextLine();
+		services.Login.login(email, password);
+
 		Cliente cliente_test = this.AltaCliente("Pepe Pompin", "Avenida La Plata 945", "9999-9999", "test@gmail.com",
 				39000123);
 		Producto producto_test = this.AltaProducto(1, (float) 22.50, "producto 1", "test de alta de producto");
