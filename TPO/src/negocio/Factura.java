@@ -26,14 +26,12 @@ public class Factura {
 		items.add(item);
 	}
 	
-	public int calcularTotal()
-	{
+	public int calcularTotal(){
 		int total = 0;
 		for (Iterator<ItemFactura> i = items.iterator(); i.hasNext();) {
 			ItemFactura itemFactura = i.next();
 			total += itemFactura.calcularPrecio();
 		}
-		
 		return total;
 	}
 }
