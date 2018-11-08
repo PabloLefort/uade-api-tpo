@@ -3,16 +3,16 @@ package negocio;
 public class ItemFactura {
 	private Producto prod;
 	private int cantidad;
-	private int precio;
+	private Factura factura;
 	
-	public ItemFactura(Producto prod, int cantidad, int precio) {
+	public ItemFactura(Producto prod, int cantidad, Factura fac) {
 		this.prod = prod;
 		this.cantidad = cantidad;
-		this.precio = precio;
+		this.factura = fac;
 	}
 	
 	public int calcularPrecio() {
-		return precio * cantidad;
+		return (int)prod.getPrecio() * cantidad;
 	}
 	
 	public Producto getProducto() {
@@ -23,7 +23,7 @@ public class ItemFactura {
 		return this.cantidad;
 	}
 	
-	public int getPrecio() {
-		return this.precio;
+	public Factura getFactura() {
+		return this.factura;
 	}
 }

@@ -56,8 +56,8 @@ public class ReclamoCantidadesDAO {
 	        ConexionPool.closeConexion(con);
 	        
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			throw new AccesoException("Error de consulta");
 		}        
 	}
 
