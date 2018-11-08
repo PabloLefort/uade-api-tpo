@@ -14,6 +14,7 @@ import negocio.Cliente;
 import negocio.ItemReclamoProducto;
 import negocio.Producto;
 import negocio.ReclamoProducto;
+import services.ConexionPool;
 
 public class ReclamoProductoDAO {
 

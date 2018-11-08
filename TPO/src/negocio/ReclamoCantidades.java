@@ -2,12 +2,16 @@ package negocio;
 
 import java.sql.Date;
 
-public class ReclamoCantidades extends Reclamo {
-	
-	ItemReclamoCantidad item;	
+import negocio.strategy.TratamientoFactory;
 
-	public ReclamoCantidades(Date fecha, int nroReclamo, String descripcion, Cliente cliente, ItemReclamoCantidad item) {
+public class ReclamoCantidades extends Reclamo {
+
+	ItemReclamoCantidad item;
+
+	public ReclamoCantidades(Date fecha, int nroReclamo, String descripcion, Cliente cliente,
+			ItemReclamoCantidad item) {
 		super(fecha, nroReclamo, descripcion, cliente);
+		setTratamientoStrategy(TratamientoFactory.build(this));
 		this.item = item;
 	}
 
@@ -17,10 +21,10 @@ public class ReclamoCantidades extends Reclamo {
 
 	public ItemReclamoCantidad getItemReclamoCantidad() {
 		return this.item;
-	}	
+	}
 
 	@Override
-	public String getTipoReclamo() {
-		return TiposReclamo.CANTIDADES.toString();
+	public void procesar() {
+		getTratamientoStrategy().procesarReclamo();
 	}
 }

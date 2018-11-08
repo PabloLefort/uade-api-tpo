@@ -1,14 +1,16 @@
 package negocio;
 
 import java.sql.Date;
-import java.sql.SQLException;
 import java.util.Collection;
+
+import negocio.strategy.TratamientoFactory;
 
 public class ReclamoFacturacion extends Reclamo {
 	Collection<Factura> facturas;
 
 	public ReclamoFacturacion(Date fecha, int nroReclamo, String descripcion, Cliente cliente) {
 		super(fecha, nroReclamo, descripcion, cliente);
+		setTratamientoStrategy(TratamientoFactory.build(this));
 	}
 
 	public void addFactura(Factura factura) {
@@ -20,7 +22,7 @@ public class ReclamoFacturacion extends Reclamo {
 	}
 
 	@Override
-	public String getTipoReclamo() {
-		return TiposReclamo.FACTURACION.toString();
+	public void procesar() {
+		getTratamientoStrategy().procesarReclamo();
 	}
 }

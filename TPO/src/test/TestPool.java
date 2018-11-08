@@ -2,7 +2,7 @@ package test;
 
 import java.sql.Connection;
 
-import dao.ConexionPool;
+import services.ConexionPool;
 
 public class TestPool {
 

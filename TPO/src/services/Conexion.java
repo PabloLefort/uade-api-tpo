@@ -1,16 +1,16 @@
-package dao;
+package services;
 
 import java.sql.Connection;
 
 public class Conexion {
-	
+
 	private Connection conexion = null;
 	private Boolean estado = Boolean.FALSE;
 	private Integer posicion = null;
-	
+
 	public Conexion() {
 	}
-	
+
 	public Connection getConexion() {
 		return conexion;
 	}
