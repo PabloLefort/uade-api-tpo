@@ -1,11 +1,11 @@
-package dao;
+package services;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConexionPool {
-	
+
 	private static Boolean INITIALIZED = Boolean.FALSE;
 	private static Boolean DEBUG = Boolean.TRUE;
 	private static final int POOL_SIZE = 5;
@@ -22,11 +22,11 @@ public class ConexionPool {
 			INITIALIZED = Boolean.TRUE;
 		}
 	}
-	
+
 	private static long getTime() {
 		return System.nanoTime();
 	}
-	
+
 	private static void showPerformance(long initialTime, String labelPrefix) {
 		if (DEBUG) {
 			long tiempoNanoSegundos = getTime();
@@ -39,9 +39,9 @@ public class ConexionPool {
 
 	public static synchronized Connection newConexion() throws SQLException {
 		long tiempoInicialNanoSegundos = getTime();
-		String labelPrefixNullConnection = ConexionPool.class + " newConexion: conexión NULL entregada en ";
-		String labelPrefixConnection = ConexionPool.class + " newConexion: conexión entregada en ";
-		
+		String labelPrefixNullConnection = ConexionPool.class + " newConexion: conexiï¿½n NULL entregada en ";
+		String labelPrefixConnection = ConexionPool.class + " newConexion: conexiï¿½n entregada en ";
+
 		if (ULTIMA_POSICION_LIBRE != (-1)) {
 			boolean obtenida = false;
 			Conexion conexion = conexiones[ULTIMA_POSICION_LIBRE];
@@ -74,7 +74,8 @@ public class ConexionPool {
 					ULTIMA_POSICION_LIBRE = 0;
 					boolean encontrada = false;
 					for (int posicion = 0; ((!encontrada) && (posicion < POOL_SIZE)); posicion++) {
-						if ((conexiones[posicion] == null) || ((conexiones[posicion] != null) && (conexiones[posicion].getEstado() == false))) {
+						if ((conexiones[posicion] == null)
+								|| ((conexiones[posicion] != null) && (conexiones[posicion].getEstado() == false))) {
 							ULTIMA_POSICION_LIBRE = posicion;
 							encontrada = true;
 						}
@@ -120,9 +121,9 @@ public class ConexionPool {
 				e.printStackTrace();
 			}
 		}
-		showPerformance(tiempoInicialNanoSegundos, ConexionPool.class + " closeConexion: conexión cerrada en");
+		showPerformance(tiempoInicialNanoSegundos, ConexionPool.class + " closeConexion: conexiï¿½n cerrada en");
 	}
-	
+
 	public static synchronized void clean() {
 		long tiempoInicialNanoSegundos = getTime();
 		if ((conexiones != null) && (conexiones.length > 0)) {

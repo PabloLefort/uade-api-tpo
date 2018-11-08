@@ -9,6 +9,7 @@ import excepciones.AccesoException;
 import excepciones.ConexionException;
 import excepciones.ProductoException;
 import negocio.Producto;
+import services.ConexionPool;
 
 public class ProductoDAO {
 
