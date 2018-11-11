@@ -1,26 +1,19 @@
 package dao;
 
-import java.sql.Array;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.Collection;
 import java.util.Iterator;
 
 import excepciones.AccesoException;
 import excepciones.ClienteException;
 import excepciones.ConexionException;
-import excepciones.ProductoException;
 import excepciones.ReclamoException;
 import negocio.Cliente;
 import negocio.Factura;
 import negocio.ItemFactura;
-import negocio.ItemReclamoCantidad;
 import negocio.Producto;
-import negocio.Reclamo;
-import negocio.ReclamoCantidades;
 import negocio.ReclamoFacturacion;
 
 public class ReclamoFacturacionDAO {
@@ -82,11 +75,16 @@ public class ReclamoFacturacionDAO {
 				stmt = con.prepareStatement(SQL);
 				rs = stmt.executeQuery();
 				
-				Factura aux = null;
-				if(rs.next()) {
-					//aux = new Factura(rs.getInt(0), rs.getDate(1));
+				Factura fac = null;
+				Producto prod = null;
+				ItemFactura itemF = null;
+				while(rs.next()) {
+					fac = new Factura(rs.getInt(0), rs.getDate(1));
+					prod = new Producto(rs.getInt(6), rs.getFloat(7), rs.getString(8), rs.getString(9));
+					itemF = new ItemFactura(prod, rs.getInt(2), fac);
+					rec.addItemFactura(itemF);
 				}
-				
+
 				return rec;
 			}
 		} catch (SQLException | ClienteException e1) {
