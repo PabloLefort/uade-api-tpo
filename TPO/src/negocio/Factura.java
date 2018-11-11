@@ -7,7 +7,6 @@ import java.util.Iterator;
 public class Factura {
 	private int nroFactura;
 	private Date fechaEmision;
-	private Collection<ItemFactura> items;
 	
 	public Factura(int nroFactura, Date fecha) {
 		this.nroFactura = nroFactura;
@@ -20,20 +19,5 @@ public class Factura {
 	
 	public Date getFechaFactura() {
 		return this.fechaEmision;
-	}
-	
-	public void addItemFactura(ItemFactura item) {
-		items.add(item);
-	}
-	
-	public int calcularTotal()
-	{
-		int total = 0;
-		for (Iterator<ItemFactura> i = items.iterator(); i.hasNext();) {
-			ItemFactura itemFactura = i.next();
-			total += itemFactura.calcularPrecio();
-		}
-		
-		return total;
 	}
 }
