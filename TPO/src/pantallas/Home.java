@@ -1,5 +1,7 @@
 package pantallas;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -9,15 +11,9 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
-
-import controlador.SistemaAdministracionReclamos;
-import negocio.Cliente;
-import negocio.ItemReclamoCantidad;
-import negocio.Producto;
 import negocio.ReclamoCantidades;
 
 public class Home extends JFrame {
@@ -27,20 +23,6 @@ public class Home extends JFrame {
 	private JTable tablaFaltantes;
 	private JTable tablaProducto;
 	private JTable tablaZona;
-	
-	public static void main(String[] args) {
-		Home h = new Home();
-		Cliente cliente_test = new Cliente("Pepe Pompin",
-				"Avenida La Plata 945", "9999-9999", "test@gmail.com", 39000123); 
-		Producto producto_test = new Producto(1, (float) 22.50, "producto 1",
-				"test de alta de producto");
-		Date now = new Date(7, 7, 1990);
-		ItemReclamoCantidad item = new ItemReclamoCantidad(producto_test, 10);
-		ReclamoCantidades reclamo = new ReclamoCantidades(now, 1, "asdasd", cliente_test, item);
-		List<ReclamoCantidades> reclamos = new ArrayList<ReclamoCantidades>();
-		reclamos.add(reclamo);
-		h.setReclamosCantidades(reclamos);
-	}
 	
 	public Home() {
 		this.setTitle("Sistema de Reclamos");
@@ -53,6 +35,15 @@ public class Home extends JFrame {
 		
 		JMenuItem btnGenerar = new JMenuItem("Generar");
 		mnReclamos.add(btnGenerar);
+		ActionListener btnGenerarListener = new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("kajshd");
+				
+			}
+		};
+		btnGenerar.addActionListener(btnGenerarListener);
 		
 		JMenu mnProductos = new JMenu("Productos");
 		menuBar.add(mnProductos);

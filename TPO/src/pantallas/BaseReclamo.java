@@ -4,15 +4,21 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.DefaultComboBoxModel;
 
 import negocio.TiposReclamo;
 import javax.swing.JButton;
+import javax.swing.JInternalFrame;
 
 public abstract class BaseReclamo extends JFrame {
 	private JTextField fechaFextField;
 	private JTextField textField_1;
 	private JTextField textField_2;
+	private JComboBox comboBox;
 	
 	public BaseReclamo(){
 		this.getContentPane().setLayout(null);
@@ -48,6 +54,8 @@ public abstract class BaseReclamo extends JFrame {
 		comboBox.setModel(new DefaultComboBoxModel(TiposReclamo.values()));
 		comboBox.setBounds(93, 141, 175, 27);
 		this.getContentPane().add(comboBox);
+		this.comboBox = comboBox;
+
 		
 		JLabel lblReclamoTipo = new JLabel("Reclamo Tipo");
 		lblReclamoTipo.setBounds(6, 145, 85, 16);
