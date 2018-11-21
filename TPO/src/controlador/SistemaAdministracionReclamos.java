@@ -67,6 +67,12 @@ public class SistemaAdministracionReclamos {
 		Cliente cliente = new ClienteDAO().getInstancia().getById(dni);
 		return cliente.toView();
 	}
+	
+	public Cliente buscarClienteByDni(int dni) throws ConexionException, AccesoException, ClienteException {
+		Cliente cliente = new ClienteDAO().getInstancia().getById(dni);
+		return cliente;
+	}
+	
 
 	// ABM Usuario
 	public Usuario AltaUsuario(String nombre, String email, String password, int idRol) {
@@ -136,7 +142,7 @@ public class SistemaAdministracionReclamos {
 		return prod;
 	}
 
-	private Producto BuscarProducto(int codProducto) {
+	public Producto BuscarProducto(int codProducto) {
 		try {
 			ProductoDAO prodDao = new ProductoDAO();
 			return prodDao.obtenerProductoPorId(codProducto);

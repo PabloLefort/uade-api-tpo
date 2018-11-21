@@ -1,5 +1,10 @@
 package pantallas;
 
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -13,6 +18,7 @@ import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
+import javax.swing.WindowConstants;
 
 import controlador.SistemaAdministracionReclamos;
 import negocio.Cliente;
@@ -28,6 +34,12 @@ public class Home extends JFrame {
 	private JTable tablaProducto;
 	private JTable tablaZona;
 	
+	public static final String ALTA = "Alta";
+	public static final String BAJA = "Baja";
+	public static final String MODIFICAR = "Modificación";
+
+	private SistemaAdministracionReclamos sistema;
+
 	public static void main(String[] args) {
 		Home h = new Home();
 		Cliente cliente_test = new Cliente("Pepe Pompin",
@@ -43,6 +55,11 @@ public class Home extends JFrame {
 	}
 	
 	public Home() {
+		sistema = new SistemaAdministracionReclamos();
+		
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		setLayout(new FlowLayout(FlowLayout.TRAILING));
 		this.setTitle("Sistema de Reclamos");
 		
 		JMenuBar menuBar = new JMenuBar();
@@ -51,14 +68,92 @@ public class Home extends JFrame {
 		JMenu mnReclamos = new JMenu("Reclamos");
 		menuBar.add(mnReclamos);
 		
-		JMenuItem btnGenerar = new JMenuItem("Generar");
-		mnReclamos.add(btnGenerar);
+		JMenuItem jMAltaReclamo = new JMenuItem("Alta");
+		mnReclamos.add(jMAltaReclamo);
+		
+		JMenuItem jMBajaReclamo = new JMenuItem("Baja");
+		mnReclamos.add(jMBajaReclamo);
+		
+		JMenuItem jMModificacionReclamo = new JMenuItem("Modificacion");
+		mnReclamos.add(jMModificacionReclamo);				
+		
+		jMAltaReclamo.addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent e) {
+	    		ReclamoABM re = new ReclamoABM(sistema, ALTA);
+	    	}
+	    });
+	    
+		jMBajaReclamo.addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent e) {
+	    		ReclamoABM re = new ReclamoABM(sistema, BAJA);
+	    	}
+	    });
+	    
+		jMModificacionReclamo.addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent e) {
+	    		ReclamoABM re = new ReclamoABM(sistema, MODIFICAR);
+	    	}
+	    });
 		
 		JMenu mnProductos = new JMenu("Productos");
 		menuBar.add(mnProductos);
 		
+		JMenuItem jMAltaProducto = new JMenuItem("Alta");
+		mnProductos.add(jMAltaProducto);
+		
+		JMenuItem jMBajaProducto = new JMenuItem("Baja");
+		mnProductos.add(jMBajaProducto);
+		
+		JMenuItem jMModificacionProducto = new JMenuItem("Modificacion");
+		mnProductos.add(jMModificacionProducto);	
+		
+		jMAltaProducto.addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent e) {
+	    		ProductoABM pd = new ProductoABM(sistema, ALTA);
+	    	}
+	    });
+		
+		jMBajaProducto.addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent e) {
+	    		ProductoABM pd = new ProductoABM(sistema, BAJA);
+	    	}
+	    });
+		
+		jMModificacionProducto.addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent e) {
+	    		ProductoABM pd = new ProductoABM(sistema, MODIFICAR);
+	    	}
+	    });
+		
 		JMenu mnClientes = new JMenu("Clientes");
 		menuBar.add(mnClientes);
+		
+		JMenuItem jMAltaCliente = new JMenuItem("Alta");
+		mnClientes.add(jMAltaCliente);
+		
+		JMenuItem jMBajaCliente = new JMenuItem("Baja");
+		mnClientes.add(jMBajaCliente);
+		
+		JMenuItem jMModificacionCliente = new JMenuItem("Modificacion");
+		mnClientes.add(jMModificacionCliente);	
+		
+		jMAltaCliente.addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent e) {
+	    		ClienteABM cl = new ClienteABM(sistema, ALTA);
+	    	}
+	    });
+		
+		jMBajaCliente.addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent e) {
+	    		ClienteABM cl = new ClienteABM(sistema, BAJA);
+	    	}
+	    });
+		
+		jMModificacionCliente.addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent e) {
+	    		ClienteABM cl = new ClienteABM(sistema, MODIFICAR);
+	    	}
+	    });
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBounds(100, 68, 478, 253);
@@ -88,11 +183,10 @@ public class Home extends JFrame {
 		JScrollPane scrollZona = new JScrollPane(tablaZona);
 		scrollZona.add(tablaZona.getTableHeader());
 	    tabbedPane.addTab("Zona", scrollZona);
-		
-		
+	    
 		getContentPane().setLayout(null);
 		this.setVisible(true);
-		this.setSize(700, 500);
+		this.setBounds(0,0,screenSize.width, screenSize.height);
 	}
 	
 	public void setReclamosCantidades(Collection<ReclamoCantidades> reclamos) {
