@@ -1,5 +1,8 @@
 package pantallas;
 
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
@@ -14,6 +17,12 @@ import javax.swing.JMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
+import javax.swing.WindowConstants;
+
+import controlador.SistemaAdministracionReclamos;
+import negocio.Cliente;
+import negocio.ItemReclamoCantidad;
+import negocio.Producto;
 import negocio.ReclamoCantidades;
 import negocio.ReclamoZona;
 
@@ -25,7 +34,18 @@ public class Home extends JFrame {
 	private JTable tablaProducto;
 	private JTable tablaZona;
 	
+	public static final String ALTA = "Alta";
+	public static final String BAJA = "Baja";
+	public static final String MODIFICAR = "Modificaci�n";
+
+	private SistemaAdministracionReclamos sistema;
+
 	public Home() {
+		sistema = new SistemaAdministracionReclamos();
+		
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		setLayout(new FlowLayout(FlowLayout.TRAILING));
 		this.setTitle("Sistema de Reclamos");
 		
 		JMenuBar menuBar = new JMenuBar();
@@ -34,22 +54,74 @@ public class Home extends JFrame {
 		JMenu mnReclamos = new JMenu("Reclamos");
 		menuBar.add(mnReclamos);
 		
-		JMenuItem btnGenerar = new JMenuItem("Generar");
-		mnReclamos.add(btnGenerar);
-		ActionListener btnGenerarListener = new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-			}
-		};
-		btnGenerar.addActionListener(btnGenerarListener);
+		JMenuItem jMGenerarReclamo = new JMenuItem("Generar");
+		mnReclamos.add(jMGenerarReclamo);
+		
+		jMGenerarReclamo.addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent e) {
+	    		GenerarReclamo pd = new GenerarReclamo();
+	    	}
+	    });
 		
 		JMenu mnProductos = new JMenu("Productos");
 		menuBar.add(mnProductos);
 		
+		JMenuItem jMAltaProducto = new JMenuItem("Alta");
+		mnProductos.add(jMAltaProducto);
+		
+		JMenuItem jMBajaProducto = new JMenuItem("Baja");
+		mnProductos.add(jMBajaProducto);
+		
+		JMenuItem jMModificacionProducto = new JMenuItem("Modificacion");
+		mnProductos.add(jMModificacionProducto);	
+		
+		jMAltaProducto.addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent e) {
+	    		ProductoABM pd = new ProductoABM(sistema, ALTA);
+	    	}
+	    });
+		
+		jMBajaProducto.addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent e) {
+	    		ProductoABM pd = new ProductoABM(sistema, BAJA);
+	    	}
+	    });
+		
+		jMModificacionProducto.addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent e) {
+	    		ProductoABM pd = new ProductoABM(sistema, MODIFICAR);
+	    	}
+	    });
+		
 		JMenu mnClientes = new JMenu("Clientes");
 		menuBar.add(mnClientes);
+		
+		JMenuItem jMAltaCliente = new JMenuItem("Alta");
+		mnClientes.add(jMAltaCliente);
+		
+		JMenuItem jMBajaCliente = new JMenuItem("Baja");
+		mnClientes.add(jMBajaCliente);
+		
+		JMenuItem jMModificacionCliente = new JMenuItem("Modificacion");
+		mnClientes.add(jMModificacionCliente);	
+		
+		jMAltaCliente.addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent e) {
+	    		ClienteABM cl = new ClienteABM(sistema, ALTA);
+	    	}
+	    });
+		
+		jMBajaCliente.addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent e) {
+	    		ClienteABM cl = new ClienteABM(sistema, BAJA);
+	    	}
+	    });
+		
+		jMModificacionCliente.addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent e) {
+	    		ClienteABM cl = new ClienteABM(sistema, MODIFICAR);
+	    	}
+	    });
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBounds(100, 68, 478, 253);
@@ -79,11 +151,10 @@ public class Home extends JFrame {
 		JScrollPane scrollZona = new JScrollPane(tablaZona);
 		scrollZona.add(tablaZona.getTableHeader());
 	    tabbedPane.addTab("Zona", scrollZona);
-		
-		
+	    
 		getContentPane().setLayout(null);
 		this.setVisible(true);
-		this.setSize(700, 500);
+		this.setBounds(0,0,screenSize.width, screenSize.height);
 	}
 	
 	public void setReclamosCantidades(Collection<ReclamoCantidades> reclamos) {

@@ -8,6 +8,13 @@ import negocio.Reclamo;
 public class EditReclamo extends BaseReclamo {
 	private Reclamo rec;
 	
+	public EditReclamo() {
+		setSize(400,400);
+		setLocation(600,300);
+		setVisible(true);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+	}
+	
 	public EditReclamo(Reclamo rec) {
 		super();
 		this.setTitle("Reclamo " + rec.getId());
