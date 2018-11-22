@@ -68,30 +68,12 @@ public class Home extends JFrame {
 		JMenu mnReclamos = new JMenu("Reclamos");
 		menuBar.add(mnReclamos);
 		
-		JMenuItem jMAltaReclamo = new JMenuItem("Alta");
-		mnReclamos.add(jMAltaReclamo);
+		JMenuItem jMGenerarReclamo = new JMenuItem("Generar");
+		mnReclamos.add(jMGenerarReclamo);
 		
-		JMenuItem jMBajaReclamo = new JMenuItem("Baja");
-		mnReclamos.add(jMBajaReclamo);
-		
-		JMenuItem jMModificacionReclamo = new JMenuItem("Modificacion");
-		mnReclamos.add(jMModificacionReclamo);				
-		
-		jMAltaReclamo.addActionListener(new ActionListener() {
+		jMGenerarReclamo.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
-	    		ReclamoABM re = new ReclamoABM(sistema, ALTA);
-	    	}
-	    });
-	    
-		jMBajaReclamo.addActionListener(new ActionListener() {
-	    	public void actionPerformed(ActionEvent e) {
-	    		ReclamoABM re = new ReclamoABM(sistema, BAJA);
-	    	}
-	    });
-	    
-		jMModificacionReclamo.addActionListener(new ActionListener() {
-	    	public void actionPerformed(ActionEvent e) {
-	    		ReclamoABM re = new ReclamoABM(sistema, MODIFICAR);
+	    		GenerarReclamo pd = new GenerarReclamo();
 	    	}
 	    });
 		
