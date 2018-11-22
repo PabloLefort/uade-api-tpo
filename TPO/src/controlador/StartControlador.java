@@ -9,6 +9,8 @@ import negocio.Cliente;
 import negocio.ItemReclamoCantidad;
 import negocio.Producto;
 import negocio.ReclamoCantidades;
+import negocio.ReclamoZona;
+import negocio.Zona;
 import pantallas.Home;
 import services.ConexionPool;
 
@@ -25,9 +27,14 @@ public class StartControlador {
 		Date now = new Date(7, 7, 1990);
 		ItemReclamoCantidad item = new ItemReclamoCantidad(producto_test, 10);
 		ReclamoCantidades reclamo = new ReclamoCantidades(now, 1, "asdasd", cliente_test, item);
+		Zona zonaTest = new Zona(1, "Barracas");
+		ReclamoZona recZona = new ReclamoZona(now, 2, "asdasd", cliente_test, zonaTest);
 		List<ReclamoCantidades> reclamos = new ArrayList<ReclamoCantidades>();
 		reclamos.add(reclamo);
 		h.setReclamosCantidades(reclamos);
+		List<ReclamoZona> reclamosZona = new ArrayList<ReclamoZona>();
+		reclamosZona.add(recZona);
+		h.setReclamosZona(reclamosZona);
 
 		try {
 			ConexionPool.init();

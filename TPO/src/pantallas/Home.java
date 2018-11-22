@@ -15,6 +15,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import negocio.ReclamoCantidades;
+import negocio.ReclamoZona;
 
 public class Home extends JFrame {
 	private JTable tablaCantidades;
@@ -39,7 +40,6 @@ public class Home extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("kajshd");
 				
 			}
 		};
@@ -91,6 +91,14 @@ public class Home extends JFrame {
 		this.tablaCantidades.setModel(model);
 		for (int i = 0; i < model.getColumnNames().length; i++) {
 			this.tablaCantidades.getTableHeader().getColumnModel().getColumn(i).setHeaderValue(model.getColumnNames()[i]);
+		}
+	}
+	
+	public void setReclamosZona(Collection<ReclamoZona> reclamos) {
+		ReclamoZonaTableModel model = new ReclamoZonaTableModel(reclamos);
+		this.tablaZona.setModel(model);
+		for (int i = 0; i < model.getColumnNames().length; i++) {
+			this.tablaZona.getTableHeader().getColumnModel().getColumn(i).setHeaderValue(model.getColumnNames()[i]);
 		}
 	}
 }
