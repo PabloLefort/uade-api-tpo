@@ -85,4 +85,18 @@ public class ClienteDAO {
 			e.printStackTrace();
 		}   
 	}
+	
+	public void delete(Cliente cliente) throws ConexionException, AccesoException, ClienteException	{
+		
+		String SQL = "DELETE Cliente WHERE Id = '" + cliente.getId() + "'";
+		
+		try {
+			Connection con = ConexionPool.newConexion();
+			PreparedStatement stmt = con.prepareStatement(SQL);
+			stmt.execute();
+			
+		} catch (SQLException e1) {
+			throw new AccesoException("Error de consulta");
+		}
+	}
 }

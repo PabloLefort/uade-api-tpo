@@ -13,8 +13,14 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
+import com.sun.javafx.binding.StringFormatter;
+
 import controlador.SistemaAdministracionReclamos;
+import excepciones.AccesoException;
+import excepciones.ClienteException;
+import excepciones.ConexionException;
 import negocio.Cliente;
+import view.ClienteView;
 
 @SuppressWarnings("serial")
 public class ClienteABM extends JFrame {
@@ -34,6 +40,7 @@ public class ClienteABM extends JFrame {
 	private JButton jbModificar;
 	private JButton jbCancelar;
 	private JButton jbEliminar;
+	private JLabel lblDniCliente;
 	
 	
 	private Dimension clienteDimension = new Dimension(420, 390);
@@ -57,18 +64,23 @@ public class ClienteABM extends JFrame {
 		int ny = 25;
 		// LABELS DE LOS DIFERENTES COMPONENTES
 		jtBusqueda = new JTextField("");
-		jtBusqueda.setBounds(nx + 20, 12, 250, 30);
+		jtBusqueda.setBounds(146, 11, 144, 30);
 		jbBuscar = new JButton();
-		jbBuscar.setToolTipText("Buscar");
-		jbBuscar.setBounds(nx + 272, 12, 30, 30);
+		jbBuscar.setText("Buscar");
+		jbBuscar.setBounds(295, 12, 91, 30);
 		jbBuscar.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0)
 			{
-				//Cliente cl = sistema.buscarClienteByDni(Integer.parseInt(jtBusqueda.getText()));
-				
-				Cliente cl = new Cliente(cliente, cliente, cliente, cliente, ny);
+				ClienteView cl;
+				int dni = Integer.parseInt(jtBusqueda.getText());
+				try {
+					cl = sistema.buscarClienteByDni(dni);
+				} catch (ConexionException | AccesoException | ClienteException e) {
+					e.printStackTrace();
+					cl = null;
+				}
 				
 				if (cl != null)
 				{
@@ -76,8 +88,8 @@ public class ClienteABM extends JFrame {
 					if (operacion.equalsIgnoreCase(Home.MODIFICAR))
 					{
 						lNombre.setVisible(true);
-						tNombre.setEditable(false);
-						tNombre.setEnabled(false);
+						tNombre.setEditable(true);
+						tNombre.setEnabled(true);
 						tNombre.setVisible(true);
 						tNombre.setText(cl.getNombre());
 
@@ -92,6 +104,12 @@ public class ClienteABM extends JFrame {
 						tTelefono.setText(cl.getTelefono());
 						tTelefono.setVisible(true);
 						lTelefono.setVisible(true);
+						
+						tDni.setValue(cl.getDni());
+						tDni.setVisible(false);
+						tDni.setEnabled(false);
+						tDni.setEditable(false);
+						lDni.setVisible(false);
 
 						jbModificar.setVisible(true);
 					}
@@ -107,6 +125,24 @@ public class ClienteABM extends JFrame {
 						tNombre.setVisible(true);
 						tNombre.setText(cl.getNombre());
 						
+						lEmail.setVisible(true);
+						tEmail.setEditable(false);
+						tEmail.setEnabled(false);
+						tEmail.setVisible(true);
+						tEmail.setText(cl.getEmail());
+						
+						lDomicilio.setVisible(true);
+						tDomicilio.setEditable(false);
+						tDomicilio.setEnabled(false);
+						tDomicilio.setVisible(true);
+						tDomicilio.setText(cl.getDomicilio());
+						
+						tTelefono.setVisible(true);
+						tTelefono.setEditable(false);
+						tTelefono.setEnabled(false);
+						lTelefono.setVisible(true);
+						tTelefono.setText(cl.getTelefono());
+						
 						tDni.setValue(cl.getDni());
 						tDni.setVisible(true);
 						tDni.setEnabled(false);
@@ -118,12 +154,16 @@ public class ClienteABM extends JFrame {
 				} else
 				{
 					JOptionPane.showMessageDialog(null,
-							"El Cliente no existe", "Búsqueda",
+							"El Cliente no existe", "Busqueda",
 							JOptionPane.INFORMATION_MESSAGE);
 				}
 
 			}
 		});
+		
+		lblDniCliente = new JLabel("Dni cliente:");
+		lblDniCliente.setBounds(44, 18, 72, 16);
+		getContentPane().add(lblDniCliente);
 
 		getContentPane().add(jtBusqueda);
 		getContentPane().add(jbBuscar);
@@ -137,23 +177,39 @@ public class ClienteABM extends JFrame {
 		getContentPane().add(tNombre);
 
 		lEmail = new JLabel("Email");
-		lEmail.setBounds(nx, ny + 50, 60, 30);
-		tEmail = new JFormattedTextField(NumberFormat.getIntegerInstance());
+		lEmail.setBounds(45, 87, 60, 30);
+		tEmail = new JFormattedTextField();
 		tEmail.setText("");
-		tEmail.setBounds(nx + 100, ny + 50, 200, 30);
+		tEmail.setBounds(147, 87, 200, 30);
 		getContentPane().add(lEmail);
 		getContentPane().add(tEmail);
 
 		lDomicilio = new JLabel("Domicilio");
-		lDomicilio.setBounds(nx, ny + 110, 100, 30);
+		lDomicilio.setBounds(45, 171, 100, 30);
 		tDomicilio = new JTextField();
 		tDomicilio.setText("");
-		tDomicilio.setBounds(nx + 100, ny + 110, 80, 30);
+		tDomicilio.setBounds(145, 171, 202, 30);
 		getContentPane().add(lDomicilio);
 		getContentPane().add(tDomicilio);
+		
+		lTelefono = new JLabel("Telefono");
+		lTelefono.setBounds(45, 129, 100, 30);
+		tTelefono = new JTextField();
+		tTelefono.setText("");
+		tTelefono.setBounds(145, 129, 202, 30);
+		getContentPane().add(lTelefono);
+		getContentPane().add(tTelefono);
+		
+		lDni = new JLabel("Dni");
+		lDni.setBounds(45, 213, 60, 30);
+		tDni = new JFormattedTextField();
+		tDni.setText("");
+		tDni.setBounds(145, 213, 202, 30);
+		getContentPane().add(lDni);
+		getContentPane().add(tDni);
 
 		jbCancelar = new JButton("Cancelar");
-		jbCancelar.setBounds(nx, ny + 280, 70, 40);
+		jbCancelar.setBounds(167, 305, 89, 40);
 		jbCancelar.setToolTipText("Cancelar");
 		getContentPane().add(jbCancelar);
 		jbCancelar.addActionListener(new ActionListener() {
@@ -165,7 +221,7 @@ public class ClienteABM extends JFrame {
 		});
 
 		jbModificar = new JButton("Modificar");
-		jbModificar.setBounds(nx + 250, ny + 280, 70, 40);
+		jbModificar.setBounds(268, 305, 118, 40);
 		jbModificar.setToolTipText("Modificar Cliente");
 		jbModificar.setVisible(false);
 		jbModificar.addActionListener(new ActionListener() {
@@ -173,45 +229,64 @@ public class ClienteABM extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0)
 			{
-				//TODO: Modificar cliente
 				String nombre = tNombre.getText();
 				String domicilio = tDomicilio.getText();
-				
-				//sistema.ModificacionCliente(codigo, precio, nombre, descripcion);
+				String telefono = tTelefono.getText();
+				String email = tEmail.getText();
+				int dni = Integer.parseInt(tDni.getText());
 
-				JOptionPane.showMessageDialog(null,
-						"El Cliente se modifico correctamente",
-						"Modificar Cliente",
-						JOptionPane.INFORMATION_MESSAGE);
+				try {
+					sistema.ModificacionCliente(dni, nombre, domicilio, telefono, email);
+					JOptionPane.showMessageDialog(null,
+							"El Cliente se modifico correctamente",
+							"Modificar Cliente",
+							JOptionPane.INFORMATION_MESSAGE);
+					dispose();
+				} catch (ConexionException | AccesoException | ClienteException e) { // move this to sistema
+					e.printStackTrace();
+					JOptionPane.showMessageDialog(null,
+							"El Cliente no pudo modificarse",
+							"Modificar Cliente",
+							JOptionPane.INFORMATION_MESSAGE);
+					dispose();
+				}
 			}
 		});
 
 		getContentPane().add(jbModificar);
 
 		jbEliminar = new JButton("Eliminar");
-		jbEliminar.setBounds(nx + 250, ny + 280, 50, 40);
+		jbEliminar.setBounds(268, 305, 118, 40);
 		jbEliminar.setToolTipText("Eliminar Cliente");
 		jbEliminar.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0)
 			{
-				String msj = "¿Estás seguro que desea eliminar el Cliente seleccionado?";
+				String msj = "Seguro de eliminar el Cliente seleccionado?";
 				String titulo = "Eliminar Cliente";
 				int reply = JOptionPane.showConfirmDialog(null, msj, titulo,
 						JOptionPane.YES_NO_OPTION);
 
 				if (reply == JOptionPane.YES_OPTION)
 				{
-					//TODO: Baja Cliente
-					//sistema.BajaCliente(Integer.parseInt(jtBusqueda.getText()));
-			
-					JOptionPane
-							.showMessageDialog(null,
-									"El Cliente se eliminó correctamente",
-									"Baja de Cliente",
-									JOptionPane.INFORMATION_MESSAGE);
-					dispose();
+					try {
+						sistema.BajaCliente(Integer.parseInt(jtBusqueda.getText()));
+						JOptionPane
+						.showMessageDialog(null,
+								"El Cliente se elimino correctamente",
+								"Baja de Cliente",
+								JOptionPane.INFORMATION_MESSAGE);
+						dispose();
+					} catch (NumberFormatException | ConexionException | AccesoException | ClienteException e) {
+						e.printStackTrace();
+						JOptionPane
+						.showMessageDialog(null,
+								"El Cliente no se pudo eliminar",
+								"Baja de Cliente",
+								JOptionPane.INFORMATION_MESSAGE);
+						dispose();
+					}
 				}
 
 			}
@@ -219,8 +294,8 @@ public class ClienteABM extends JFrame {
 		getContentPane().add(jbEliminar);
 
 		jbGuardarYCerrar = new JButton();
-		jbGuardarYCerrar.setBounds(nx + 250, ny + 280, 50, 40);
-		jbGuardarYCerrar.setToolTipText("Guardar y Cerrar");
+		jbGuardarYCerrar.setBounds(268, 305, 118, 40);
+		jbGuardarYCerrar.setText("Guardar");
 		jbGuardarYCerrar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0)
@@ -230,9 +305,9 @@ public class ClienteABM extends JFrame {
 				String domicilio = tDomicilio.getText();
 				String telefono = tTelefono.getText();
 				String email = tEmail.getText();
-				int dni = ((Number) tDni.getValue()).intValue();
+				int dni = Integer.parseInt(tDni.getText());
 
-				sistema.AltaCliente(nombre, domicilio, telefono, email, dni);
+				System.out.println(sistema.AltaCliente(nombre, domicilio, telefono, email, dni));
 				
 				JOptionPane
 						.showMessageDialog(null,
@@ -263,9 +338,18 @@ public class ClienteABM extends JFrame {
 
 	public void setUIBusqueda(boolean mostrar)
 	{
+		jtBusqueda.setVisible(mostrar);
+		lblDniCliente.setVisible(mostrar);
 		tNombre.setVisible(!mostrar);
+		lNombre.setVisible(!mostrar);
 		tDomicilio.setVisible(!mostrar);
+		lDomicilio.setVisible(!mostrar);
 		tEmail.setVisible(!mostrar);
+		lEmail.setVisible(!mostrar);
+		tDni.setVisible(!mostrar);
+		lDni.setVisible(!mostrar);
+		tTelefono.setVisible(!mostrar);
+		lTelefono.setVisible(!mostrar);
 		jbGuardarYCerrar.setVisible(!mostrar);
 		jbEliminar.setVisible(!mostrar);
 	}
@@ -275,10 +359,14 @@ public class ClienteABM extends JFrame {
 		jtBusqueda.setVisible(!mostrar);
 		jbBuscar.setVisible(!mostrar);
 		tNombre.setVisible(mostrar);
+		tDni.setVisible(mostrar);
+		lDni.setVisible(mostrar);
+		tTelefono.setVisible(mostrar);
+		lTelefono.setVisible(mostrar);
 		tDomicilio.setVisible(mostrar);
 		lNombre.setVisible(mostrar);
+		lblDniCliente.setVisible(!mostrar);
 		jbGuardarYCerrar.setVisible(mostrar);
 		jbEliminar.setVisible(false);
 	}
-
 }

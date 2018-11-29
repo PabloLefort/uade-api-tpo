@@ -1,8 +1,10 @@
 package controlador;
 
+import java.awt.List;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 
 import dao.ClienteDAO;
 import dao.LoginDAO;
@@ -26,7 +28,7 @@ import view.ClienteView;
 
 public class SistemaAdministracionReclamos {
 
-	private Collection<Cliente> clientes;
+	private ArrayList clientes = new ArrayList();
 	private Collection<Reclamo> reclamos;
 	private Collection<Factura> facturas;
 	private Collection<Usuario> usuarios;
@@ -38,6 +40,7 @@ public class SistemaAdministracionReclamos {
 	}
 
 	public void Start() {
+		System.out.println("skljhfasldkfjhalsdkfjhaldkj ");
 		Cliente cliente_test = this.AltaCliente("Pepe Pompin",
 				"Avenida La Plata 945", "9999-9999", "test@gmail.com", 39000123); 
 		Producto producto_test = this.AltaProducto(1, (float) 22.50, "producto 1",
@@ -49,12 +52,15 @@ public class SistemaAdministracionReclamos {
 		this.CrearReclamo(date, 3, "test_reclamo_facturacion", cliente_test, "facturacion");
 		this.CrearReclamo(date, 4, "test_reclamo_faltantes", cliente_test, "faltantes");
 		this.CrearReclamo(date, 5, "test_reclamo_productos", cliente_test, "productos");
+		//this.clientes = (Collection<Cliente>) new List();
+		this.clientes.add(cliente_test);
 	}
 
 	public Cliente AltaCliente(String nombre, String domicilio, String telefono, String email, int dni) {
 		try {
 			Cliente cliente = new Cliente(nombre, domicilio, telefono, email, dni);
-			ClienteDAO.getInstancia().save(cliente);
+			//ClienteDAO.getInstancia().save(cliente);
+			this.clientes.add(cliente);
 			return cliente;
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -68,11 +74,49 @@ public class SistemaAdministracionReclamos {
 		return cliente.toView();
 	}
 	
-	public Cliente buscarClienteByDni(int dni) throws ConexionException, AccesoException, ClienteException {
-		Cliente cliente = new ClienteDAO().getInstancia().getById(dni);
-		return cliente;
+	public ClienteView buscarClienteByDni(int dni) throws ConexionException, AccesoException, ClienteException {
+		//ClienteView cliente = new ClienteDAO().getInstancia().getById(dni).toView();
+		for (Iterator iterator = this.clientes.iterator(); iterator.hasNext();) {
+			Cliente aux = (Cliente) iterator.next();
+			if(aux.getDni() == dni) {
+				return aux.toView();
+			}
+		}
+		//return cliente;
+		return null;
 	}
 	
+	public void ModificacionCliente(int cliente_dni, String nombre, String domicilio, String telefono, String email) throws ConexionException, AccesoException, ClienteException {
+		/*Cliente cliente = new ClienteDAO().getInstancia().getById(cliente_dni);
+		if (cliente != null) {
+			ClienteDAO clienteDao = new ClienteDAO();
+			cliente.setEmail(email);
+			cliente.setNombre(nombre);
+			cliente.setTelefono(telefono);
+			clienteDao.update(cliente);
+		}*/
+		for (Iterator iterator = this.clientes.iterator(); iterator.hasNext();) {
+			Cliente aux = (Cliente) iterator.next();
+			if(aux.getDni() == cliente_dni) {
+				aux.setNombre(nombre);
+				aux.setDomicilio(domicilio);
+				aux.setEmail(email);
+				aux.setTelefono(telefono);
+			}
+		}
+	}
+	
+	public void BajaCliente(int cliente_dni) throws ConexionException, AccesoException, ClienteException {
+		/*ClienteDAO clienteDao = new ClienteDAO();
+		Cliente cliente = clienteDao.getInstancia().getById(cliente_dni);
+		clienteDao.delete(cliente);*/
+		for (int i = 0; i < this.clientes.size(); i++) {
+			Cliente c = (Cliente) this.clientes.get(i);
+			if(c.getDni() == cliente_dni) {
+				this.clientes.remove(i);
+			}
+		}
+	}
 
 	// ABM Usuario
 	public Usuario AltaUsuario(String nombre, String email, String password, int idRol) {

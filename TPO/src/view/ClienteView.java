@@ -19,6 +19,7 @@ public class ClienteView {
 		this.domicilio = domicilio;
 		this.email = email;
 		this.dni = dni;
+		this.telefono = telefono;
 	}
 	
 	public Collection<Factura> getFacturas() {
